@@ -24,7 +24,7 @@ GO
 
 /****** Object:  Table csMajorClasses     ******/
 CREATE TABLE csMajorClasses(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL,
 	classType       varchar(50)             NOT NULL,
     altClass        VARCHAR(50)             NULL
@@ -33,7 +33,7 @@ GO
 
 /****** Object:  Table seMajorClasses     ******/
 CREATE TABLE seMajorClasses(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL,
 	classType       varchar(50)             NOT NULL,
     altClass        VARCHAR(50)             NULL
@@ -42,81 +42,76 @@ GO
 
 /****** Object:  Table foundation1     ******/
 CREATE TABLE foundation1(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL
 )
 GO
 
 /****** Object:  Table foundation2A     ******/
 CREATE TABLE foundation2A(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL
 )
 GO
 
 /****** Object:  Table foundation2B     ******/
 CREATE TABLE foundation2B(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL
     )
 GO
 
 /****** Object:  Table foundation2C     ******/
 CREATE TABLE foundation2C(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL
 )
 GO
 
 /****** Object:  Table foundation3B     ******/
 CREATE TABLE foundation3B(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL
 )
 GO
 
 /****** Object:  Table foundation4A     ******/
 CREATE TABLE foundation4A(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL
 )
 GO
 
 /****** Object:  Table foundation4B     ******/
 CREATE TABLE foundation4B(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL
 )
 GO
 
 /****** Object:  Table foundation5     ******/
 CREATE TABLE foundation5(
-    class           VARCHAR(50)             NOT NULL,
+    classID           VARCHAR(50)             NOT NULL,
 	className       varchar(100)            NOT NULL
 )
 GO
 
-/****** Object:  Table courses     ******/
-CREATE TABLE courses(
-    class           VARCHAR(50)             NOT NULL,
-    classCredit     INT                     NOT NULL,
-    prereqs         VARCHAR(MAX)            NULL
-)
-GO
 
 /****** Object:  Table users     ******/
 CREATE TABLE users (
     usrID           int IDENTITY(1,1)       NOT NULL,
 	usrLast         nvarchar(30)            NULL,
 	usrFirst        nvarchar(30)            NULL,
-    miamiId         VARCHAR(50)             NOT NULL
+    miamiId         VARCHAR(50)             NOT NULL,
+	usrpassword		VARCHAR(50)				NOT NULL	
 )
 GO
 
 /****** Object:  Table userAccount     ******/
-CREATE TABLE usersAccount (
+CREATE TABLE usersCourses (
     miamiId         VARCHAR(50)             NOT NULL,
-    class           VARCHAR(50)             NOT NULL,
+    classID         VARCHAR(50)             NOT NULL,
+	className		VARCHAR(100)	NOT NULL,
     classStatus     VARCHAR(50)             NOT NULL
 )
 GO
@@ -732,23 +727,223 @@ INSERT foundation5 VALUES
 GO
 
 /****** Populate userAccount     ******/
-INSERT usersAccount VALUES
-('beuerlcd','ARC188','C'),
-('beuerlcd','CEC101','C'),
-('beuerlcd','CEC266','C'),
-('beuerlcd','CSE174','C'),
-('beuerlcd','EDL290','C'),
-('beuerlcd','MTH151','C'),
-('beuerlcd','CSE102','C'),
-('beuerlcd','CSE271','C'),
-('beuerlcd','MTH231','C'),
-('beuerlcd','POL241','C'),
-('beuerlcd','CSE262','C'),
-('beuerlcd','ENG313','C'),
-('beuerlcd','MTH251','IP'),
-('beuerlcd','CSE201','IP'),
-('beuerlcd','CSE385','IP'),
-('beuerlcd','ECO202','IP'),
-('beuerlcd','CSE278','IP'),
-('beuerlcd','POL426','IP')
+INSERT usersCourses VALUES
+('beuerlcd','ARC188','Ideas in Architecture','C'),
+('beuerlcd','CEC101','Computing, Engineering, and Society','C'),
+('beuerlcd','CEC266','Metal on Metal: Engineering and Globalization in Heavy Metal Music','C'),
+('beuerlcd','CSE174','Fundamentals of Programming and Problem Solving','C'),
+('beuerlcd','EDL290','The Nature of Group Leadership','C'),
+('beuerlcd','MTH151','Calculus I','C'),
+('beuerlcd','CSE102','Introduction to Computing and Engineering','C'),
+('beuerlcd','CSE271','Object-Oriented Programming','C'),
+('beuerlcd','MTH231','Elements of Discrete Mathematics','C'),
+('beuerlcd','POL241','American Political System','C'),
+('beuerlcd','CSE262','Technology, Ethics, and Global Society','C'),
+('beuerlcd','ENG313','Technical Writing','C'),
+('beuerlcd','MTH251','Calculus II','IP'),
+('beuerlcd','CSE201','Intro to Software Engineerin','IP'),
+('beuerlcd','CSE385','Database Systems','IP'),
+('beuerlcd','ECO202','Principles of Macroeconomics','IP'),
+('beuerlcd','CSE278','Systems I: Introduction to Systems Programming','IP'),
+('beuerlcd','POL426','Inside Washington','IP')
 GO
+
+INSERT users VALUES
+('Beuerlein','Craig','beuerlcd', 'password')
+GO
+
+
+
+/*
+	STORED PROCEDURES WRITTEN BELOW
+	use triggers when user enters their courses taken, if the course isn't in our database, report invalid course
+*/
+
+
+
+
+--Adds a new course to the userCourses table
+CREATE PROCEDURE AddNewCourse
+	@miamiId         VARCHAR(50),
+	@classID         VARCHAR(50),
+	@className		VARCHAR(100),
+	@classStatus     VARCHAR(50)  
+
+AS
+SET NOCOUNT ON
+	INSERT INTO usersCourses(
+		miamiId,    
+		classID,    
+		className,	
+		classStatus
+
+	)
+	VALUES(
+		@miamiId,    
+		@classID,    
+		@className,	
+		@classStatus
+	)
+GO
+
+--Delete a course from the usersCourses table
+CREATE PROCEDURE DeleteCourseFromUsersList
+	@classID         VARCHAR(50),
+	@className		VARCHAR(100)
+
+AS
+BEGIN
+	DELETE 
+	FROM usersCourses
+	WHERE @classID = classID AND
+		  @className = className
+END
+GO
+
+--Adds a new user to the user table based on user sign up/input
+CREATE PROCEDURE AddNewUser
+	@usrLast         nvarchar(30),      
+	@usrFirst        nvarchar(30),      
+	@miamiId         VARCHAR(50),
+	@usrPassword	 VARCHAR(50)
+AS
+SET NOCOUNT ON
+	INSERT INTO users(
+		usrLast,
+		usrFirst,
+		miamiId
+	)
+	VALUES(
+		@usrLast,  
+		@usrFirst ,
+		@miamiId  
+	)
+GO
+
+
+
+--Displays all miamiIds, fir names and last names of all users in db
+CREATE PROCEDURE GetAllUserAccounts
+AS
+	SELECT  u.miamiId, u.usrFirst, u.usrLast
+	FROM	users	u
+GO
+
+--Displays the miamiId, fir name an last name of a specific user based on user input of miamiId
+CREATE PROCEDURE GetSpecificUserAccount
+	@miamiId	INT
+AS
+	SELECT	u.miamiId, u.usrFirst, u.usrLast
+	FROM users	u
+	WHERE	@miamiId = u.miamiId
+GO
+
+--Displays all of the courses taken by a specific user
+CREATE PROCEDURE GetAllCoursesTakenByUser
+	@miamiId	INT
+AS
+	SELECT uc.classID, uc.className, uc.classStatus
+	FROM usersCourses	uc
+	WHERE @miamiId = uc.miamiId
+GO
+
+--Potential CS classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialCSClasses
+AS
+	SELECT cs.classID,	cs.className
+	FROM csMajorClasses	cs,
+		 usersCourses	uc
+	WHERE cs.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential SE classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialSEClasses
+AS
+	SELECT se.classId,	se.className
+	FROM seMajorClasses	se,
+		 usersCourses	uc
+	WHERE se.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential f1 classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialF1Classes
+AS
+	SELECT f1.classId,	f1.className
+	FROM foundation1	f1,
+		 usersCourses	uc
+	WHERE f1.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential f2a classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialF2AClasses
+AS
+	SELECT f2a.classId,	f2a.className
+	FROM foundation2A	f2a,
+		 usersCourses	uc
+	WHERE f2a.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential f2b classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialF2BClasses
+AS
+	SELECT f2b.classId,	f2b.className
+	FROM foundation2B	f2b,
+		 usersCourses	uc
+	WHERE f2b.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential f2c classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialF2CClasses
+AS
+	SELECT f2c.classId,	f2c.className
+	FROM foundation2B	f2c,
+		 usersCourses	uc
+	WHERE f2c.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential f3b classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialF3BClasses
+AS
+	SELECT f3b.classId,	f3b.className
+	FROM foundation2B	f3b,
+		 usersCourses	uc
+	WHERE f3b.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential f4a classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialF4AClasses
+AS
+	SELECT f4a.classId,	f4a.className
+	FROM foundation4A	f4a,
+		 usersCourses	uc
+	WHERE f4a.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential f4b classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialF4BClasses
+AS
+	SELECT f4b.classId,	f4b.className
+	FROM foundation4B	f4b,
+		 usersCourses	uc
+	WHERE f4b.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
+--Potential f5 classes that can be taken (not including classes already taken by the user)
+CREATE PROCEDURE PotentialF5Classes
+AS
+	SELECT f5.classId,	f5.className
+	FROM foundation5	f5,
+		 usersCourses	uc
+	WHERE f5.classID NOT IN(
+		SELECT uc.classID FROM usersCourses)
+GO
+
