@@ -357,12 +357,17 @@ namespace _385WebExample {
 
 		// Methods
 		#region ######################################################################################################################################################## Methods
-		[WebMethod]
-		public void getVendorsByState(string state) {
-			addParam("@state", state);
-			send("spGetVendorsByState", serializeStyle.DATA_TABLE);
-		}
-		#endregion
 
-	}
+        [WebMethod]
+        public void getAllCoursesTakenByUser(string miamiId)
+        {
+            addParam("@miamiId", miamiId);
+            send("GetAllCoursesTakenByUser", serializeStyle.DATA_TABLE);
+        }
+
+
+
+
+        #endregion
+    }
 }

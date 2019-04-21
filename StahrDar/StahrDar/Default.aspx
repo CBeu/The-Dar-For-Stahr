@@ -11,19 +11,34 @@
     <h1>AJAX Example using a webservice</h1>
     <input type="text", class="form-control" id="txtState" />
     <div id="lstVendors"></div>
-
+    
     -->
 
+    <h1>Enter MiamiID to see classes you have taken</h1>
+    <input type="text", class="form-control" id="txtUserID" />
+    <div id="lstClasses"></div>
+
+    <h1>Add Course</h1>
+    <input type="text", class="form-control" id="txtCourse" />
+
+    <h1>Potential CS Classes</h1>
+    <asp:Button ID="btnPotentialCS" CssClass="btn btn-primary" runat="server" Text="See Potential CS Classes" OnClick="btnPotentialCS_Click" />
+    <asp:Label ID="lblPotentialCSClasses" runat="server" Text=""></asp:Label>
+    
+    
+
     <script> 
-        $("#txtState").on("input", function (e) {
-            get("getVendorsByState", "{state: '" + $("#txtState").val() + "'}", function (response) {
-                $("#lstVendors").html("");
+        $("#txtUserID").on("input", function (e) {
+            get("getAllCoursesTakenByUser", "{miamiId: '" + $("#txtUserID").val() + "'}", function (response) {
+                $("#lstClasses").html("");
                 for (var i = 0; i < response.length; i++)
-                    $("#lstVendors").append("<div class='alert alert-success'>" + response[i].VendorName + "</div>");
+                    $("#lstClasses").append("<div class='alert alert-success'>" + response[i].className + "</div>");
             }, function (response) {
                 console.log(resonse);
             });
         });
+
+       
     </script>
 
 </asp:Content>
