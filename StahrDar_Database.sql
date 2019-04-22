@@ -831,7 +831,7 @@ GO
 
 --Displays the miamiId, fir name an last name of a specific user based on user input of miamiId
 CREATE PROCEDURE GetSpecificUserAccount
-	@miamiId	INT
+	@miamiId	VARCHAR(50)
 AS
 	SELECT	u.miamiId, u.usrFirst, u.usrLast
 	FROM users	u
@@ -840,7 +840,7 @@ GO
 
 --Displays all of the courses taken by a specific user
 CREATE PROCEDURE GetAllCoursesTakenByUser
-	@miamiId	INT
+	@miamiId	VARCHAR(50)
 AS
 	SELECT uc.classID, uc.className, uc.classStatus
 	FROM usersCourses	uc

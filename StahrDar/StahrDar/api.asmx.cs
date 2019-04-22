@@ -373,7 +373,6 @@ namespace _385WebExample {
             addParam("@classStatus", classStatus);
 
             send("AddNewCourse", serializeStyle.DATA_TABLE);
-
         }
 
 
