@@ -1,4 +1,4 @@
-﻿function get(method, data, success, fail) {
+﻿function service(method, data, success, fail) {
     $.ajax({
         type: "POST",
         url: "api.asmx/" + method,

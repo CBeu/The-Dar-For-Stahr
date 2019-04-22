@@ -365,6 +365,17 @@ namespace _385WebExample {
             send("GetAllCoursesTakenByUser", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void AddNewCourse(string miamiId, string classID, string className, string classStatus) {
+            addParam("@miamiId", miamiId);
+            addParam("@classID", classID);
+            addParam("@className", className);
+            addParam("@classStatus", classStatus);
+
+            send("AddNewCourse", serializeStyle.DATA_TABLE);
+
+        }
+
 
 
 
