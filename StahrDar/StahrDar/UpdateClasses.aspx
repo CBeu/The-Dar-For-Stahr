@@ -24,43 +24,27 @@
         function getUserCourses(miamiID) {
             var d = "";
             service("getAllCoursesTakenByUser", "{miamiId: '" + $("#txtGetClassesMiamiID").val() + "'}", function (response) {
-                d = "<table class='table table-striped table-bordered'>"
-                //$("#lstClasses").html("");
+                d = "<table class='table table-striped table-bordered'><th>Class ID</th><th>Class Name</th><th>Status</th><th>Remove</th>"
                 for (var i = 0; i < response.length; i++) {
-                    //$("#lstClasses").append("<div class='alert alert-success'>" + response[i].classID + ": " + response[i].className + "Status: " + response[i].classStatus + "</div>");
                     d += "<tr>" +
                         "<td>" + response[i].classID + "</td>" +
                         "<td>" + response[i].className + "</td>" +
+                        "<td>" + response[i].classStatus + "</td>" +
                         "</tr>"
                 }
+                d += "</table>"
                 $("#lstClasses").html(d);
             }, function (response) {
                 console.log(resonse);
             });
         }
 
-        //function getUserCourses(miamiID) {
-        //    var d = "<table class='table table-striped table-bordered' style='max-width:700px;";
-        //    service("getAllCoursesTakenByUser", "{miamiId: '" + $("#txtGetClassesMiamiID").val() + "'}",
-        //        function (response) {
-        //        $.each(response, function (index, value) {
-
-        //            d += "<tr>" +
-        //                "<td>" + value.className + "</td>" +
-        //                "</tr>";
-        //        });
-        //        $("#classList").html(d + "</table>");
-        //    }, function (response) {
-        //        alert("Error :(");
-        //        console.log(response);
-        //    });
-        //}
-
         function addNewCourse() {
             service("AddNewCourse", "{miamiId: '" + $("#txtMiamiID").val() + "', classID: '" + $("#txtCourse").val() + "', className: '" + $("#txtCourseName").val() + "', classStatus: '" + $("#txtStatus").val() + "' }",
             function (response) {
                 console.log(response);
                 $("#addSuccess").html("Course Added Successfully");
+                getUserCourses($("txtMiamiID").val());
                 }, function (response) {
                 alert("FATAL ERROR :(");
                 console.log(response);

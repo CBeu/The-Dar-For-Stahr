@@ -16,31 +16,5 @@ namespace StahrDar
         {
 
         }
-
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            api ws = new api();
-            StringBuilder sb = new StringBuilder();
-
-            ws.addParam("@state", txtVendors.Text);
-
-            DataTable tbl = ws.sqlExecDataTable("spGetVendorsByState");
-            foreach (DataRow row in tbl.Rows)
-                sb.Append("<div class='alert alert-success'>" + row["VendorName"] + "</div>");
-            lblVendors.Text = sb.ToString();
-        }
-
-        protected void btnPotentialCS_Click(object sender, EventArgs e)
-        {
-            api ws = new api();
-            StringBuilder sb = new StringBuilder();
-
-            DataTable tbl = ws.sqlExecDataTable("PotentialCSClasses");
-            foreach (DataRow row in tbl.Rows)
-            {
-                sb.Append("<div class='alert alert-success'>" + row["className"] + "</div>");
-            }
-            lblPotentialCSClasses.Text = sb.ToString();
-        }
     }
 }
