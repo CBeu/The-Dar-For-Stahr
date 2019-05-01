@@ -382,7 +382,59 @@ namespace _385WebExample {
             send("PotentialF1Classes", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void PotentialF2AClasses()
+        {
+            send("PotentialF2AClasses", serializeStyle.DATA_TABLE);
+        }
 
+        [WebMethod]
+        public void PotentialF2BClasses()
+        {
+            send("PotentialF2BClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void PotentialF2CClasses()
+        {
+            send("PotentialF2CClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void PotentialF3BClasses()
+        {
+            send("PotentialF3BClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void PotentialF4AClasses()
+        {
+            send("PotentialF4AClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void PotentialF4BClasses()
+        {
+            send("PotentialF4BClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void PotentialF5Classes()
+        {
+            send("PotentialF5Classes", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void PotentialCSClasses()
+        {
+            send("PotentialCSClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void PotentialSEClasses()
+        {
+            send("PotentialSEClasses", serializeStyle.DATA_TABLE);
+        }
 
         #endregion
     }
