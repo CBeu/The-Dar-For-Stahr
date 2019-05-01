@@ -21,6 +21,20 @@
 
     <script>
 
+        function deleteUserCourse() {
+            console.log("Delete button was clicked");
+
+            // Get table HTML
+            
+
+            // Get classID and className from table to tell service which class to delete
+            var classID = null;
+            var className = null;
+
+            // Call service and completion handler
+
+        }
+
         function getUserCourses(miamiID) {
             var d = "";
             service("getAllCoursesTakenByUser", "{miamiId: '" + $("#txtGetClassesMiamiID").val() + "'}", function (response) {
@@ -30,6 +44,7 @@
                         "<td>" + response[i].classID + "</td>" +
                         "<td>" + response[i].className + "</td>" +
                         "<td>" + response[i].classStatus + "</td>" +
+                        "<td><span class='glyphicon glyphicon-trash' onclick=deleteUserCourse() id='delButton'></span></td>" + 
                         "</tr>"
                 }
                 d += "</table>"

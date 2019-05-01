@@ -376,6 +376,11 @@ namespace _385WebExample {
             send("AddNewCourse", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void PotentialF1Classes()
+        {
+            send("PotentialF1Classes", serializeStyle.DATA_TABLE);
+        }
 
 
 
