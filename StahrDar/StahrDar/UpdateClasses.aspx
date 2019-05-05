@@ -21,22 +21,8 @@
 
     <script>
 
-        function deleteUserCourse() {
-
-            var miamiID = null;
-            var classID = null;
-            var className = null;
 
 
-            service("DeleteCourseFromUsersList", "{miamiId: '" + $("#txtMiamiID").val() + "', classID: '" + $("#txtCourse").val() + "', className: '" + $("#txtCourseName").val() + "' }",
-            function (response) {
-                console.log(response);
-                getUserCourses($("txtGetClassesMiamiID").val());
-                }, function (response) {
-                alert("FATAL ERROR :(");
-                console.log(response);
-            });
-        }
 
         function getUserCourses(miamiID) {
             var d = "";
@@ -44,10 +30,10 @@
                 d = "<table class='table table-striped table-bordered'><th>Class ID</th><th>Class Name</th><th>Status</th><th>Remove</th>"
                 for (var i = 0; i < response.length; i++) {
                     d += "<tr>" +
-                        "<td>" + response[i].classID + "</td>" +
-                        "<td>" + response[i].className + "</td>" +
+                        "<td id='classID'>" + response[i].classID + "</td>" +
+                        "<td id='className'>" + response[i].className + "</td>" +
                         "<td>" + response[i].classStatus + "</td>" +
-                        "<td><span class='glyphicon glyphicon-trash' onclick=deleteUserCourse() id='delButton'></span></td>" + 
+                        "<td><span class='glyphicon glyphicon-trash' onclick='deleteUserCourse();' id='delButton'></span></td>" + 
                         "</tr>"
                 }
                 d += "</table>"
@@ -68,6 +54,19 @@
                 console.log(response);
             });
         }
+
+        function deleteUserCourse() {
+            service("DeleteCourseFromUsersList", "{miamiId: '" + $("#txtGetClassesMiamiID").val() + "', classID: '" + $("#classID").text() + "', className: '" + $("#className").text() + "' }",
+
+                function (response) {
+                console.log(response);
+                getUserCourses($("#txtGetClassesMiamiID").val());
+                }, function (response) {
+                alert("FATAL ERROR :(");
+                console.log(response);
+            });
+        }
+
 
     </script>
 </asp:Content>
