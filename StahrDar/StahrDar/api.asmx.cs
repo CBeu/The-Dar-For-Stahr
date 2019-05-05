@@ -436,6 +436,16 @@ namespace _385WebExample {
             send("PotentialSEClasses", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void DeleteCourseFromUsersList(string miamiId, string classID, string className)
+        {
+            addParam("@miamiId", miamiId);
+            addParam("@classID", classID);
+            addParam("@className", className);
+
+            send("DeleteCourseFromUsersList", serializeStyle.DATA_TABLE);
+        }
+
         #endregion
     }
 }

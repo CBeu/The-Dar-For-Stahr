@@ -22,17 +22,20 @@
     <script>
 
         function deleteUserCourse() {
-            console.log("Delete button was clicked");
 
-            // Get table HTML
-            
-
-            // Get classID and className from table to tell service which class to delete
+            var miamiID = null;
             var classID = null;
             var className = null;
 
-            // Call service and completion handler
 
+            service("DeleteCourseFromUsersList", "{miamiId: '" + $("#txtMiamiID").val() + "', classID: '" + $("#txtCourse").val() + "', className: '" + $("#txtCourseName").val() + "' }",
+            function (response) {
+                console.log(response);
+                getUserCourses($("txtGetClassesMiamiID").val());
+                }, function (response) {
+                alert("FATAL ERROR :(");
+                console.log(response);
+            });
         }
 
         function getUserCourses(miamiID) {
