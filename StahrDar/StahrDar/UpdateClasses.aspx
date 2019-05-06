@@ -48,7 +48,8 @@
             function (response) {
                 console.log(response);
                 $("#addSuccess").html("Course Added Successfully");
-                getUserCourses($("txtMiamiID").val());
+                alert($("#txtMiamiID").val())
+                getUserCourses($("#txtMiamiID").val());
                 }, function (response) {
                 alert("FATAL ERROR :(");
                 console.log(response);
