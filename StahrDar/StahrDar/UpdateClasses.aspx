@@ -21,9 +21,6 @@
 
     <script>
 
-
-
-
         function getUserCourses(miamiID) {
             var d = "";
             service("getAllCoursesTakenByUser", "{miamiId: '" + $("#txtGetClassesMiamiID").val() + "'}", function (response) {
@@ -48,7 +45,7 @@
             function (response) {
                 console.log(response);
                 $("#addSuccess").html("Course Added Successfully");
-                alert($("#txtMiamiID").val())
+                //alert($("#txtMiamiID").val())
                 getUserCourses($("#txtMiamiID").val());
                 }, function (response) {
                 alert("FATAL ERROR :(");

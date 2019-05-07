@@ -21,9 +21,9 @@
     </div>
 
     <h4>Foundation 2C</h4>
-    <span class="btn btn-primary" onclick="getFoundation2BCourses()">Get Foundation 2B Classes</span>
+    <span class="btn btn-primary" onclick="getFoundation2CCourses()">Get Foundation 2C Classes</span>
     <div>
-        <div id="lstFoundation2B" style="margin-top:16px;"></div>
+        <div id="lstFoundation2C" style="margin-top:16px;"></div>
     </div>
 
     <h4>Foundation 3B</h4>
@@ -33,7 +33,7 @@
     </div>
 
     <h4>Foundation 4A</h4>
-    <span class="btn btn-primary" onclick="getFoundation2BCourses()">Get Foundation 4A Classes</span>
+    <span class="btn btn-primary" onclick="getFoundation4ACourses()">Get Foundation 4A Classes</span>
     <div>
         <div id="lstFoundation4A" style="margin-top:16px;"></div>
     </div>
