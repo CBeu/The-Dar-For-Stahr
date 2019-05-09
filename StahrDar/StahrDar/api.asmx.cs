@@ -446,6 +446,13 @@ namespace _385WebExample {
             send("DeleteCourseFromUsersList", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void filterCourses(string classID)
+        {
+            addParam("@searchTerm", classID);
+            send("filterClasses", serializeStyle.DATA_TABLE);
+        }
+
         #endregion
     }
 }

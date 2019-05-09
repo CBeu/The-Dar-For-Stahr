@@ -19,7 +19,25 @@
     <span class="btn btn-primary" onclick="addNewCourse();">Add Course</span>
     <div id="addSuccess"></div>
 
+    <h3>AJAX Search For Class</h3>
+    <input type="text" class="form-control" id="txtClassNum" />
+    <div id="lstClassResults"></div>
+
     <script>
+
+        // ajax for adding course
+        $("txtClassNum").on("input", function (e) {
+            console.log("A change has occurred");
+            service("filterCourses", "{classID: '" + $("txtClassNum").val() + "'}", function (response) {
+                console.log("success");
+                $("#lstClassResults").html("");
+                for (var i = 0; i < response.length; i++) {
+                    $("#lstClassResults").append("<div class='alert alert-success'>" + response[i].classID + "</div>");
+                }
+            }, function (response) {
+                console.log("failure");
+            });
+        });
 
         function getUserCourses(miamiID) {
             var d = "";
@@ -44,11 +62,11 @@
             service("AddNewCourse", "{miamiId: '" + $("#txtMiamiID").val() + "', classID: '" + $("#txtCourse").val() + "', className: '" + $("#txtCourseName").val() + "', classStatus: '" + $("#txtStatus").val() + "' }",
             function (response) {
                 console.log(response);
-                $("#addSuccess").html("Course Added Successfully");
+                $("#addSuccess").html("Course Added Successfully. Refresh your course list above.");
                 //alert($("#txtMiamiID").val())
                 getUserCourses($("#txtMiamiID").val());
                 }, function (response) {
-                alert("FATAL ERROR :(");
+                alert("Error adding this class to your course lists.");
                 console.log(response);
             });
         }
