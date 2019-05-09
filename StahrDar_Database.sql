@@ -1442,3 +1442,29 @@ join courseCredits as cc on u.classID = cc.classID
 join foundation5 as f1 on u.classID = f1.classID
 where u.miamiId = @miamiID
 GO
+
+CREATE PROCEDURE [dbo].[filterClasses]
+	@searchTerm VARCHAR(50)
+AS
+	WITH tbl AS (
+	SELECT classID, className FROM dbo.csMajorClasses --124 rows
+	UNION ALL 
+	SELECT * FROM dbo.foundation1 -- 2 rows
+	UNION ALL 
+	SELECT * FROM dbo.foundation2A -- 35 rows
+	UNION ALL
+	SELECT * FROM dbo.foundation2B -- 105 rows
+	UNION ALL
+	SELECT * FROM dbo.foundation2C -- 66 rows
+	UNION ALL
+	SELECT * FROM dbo.foundation3B -- 79 rows
+	UNION ALL
+	SELECT * FROM dbo.foundation4A -- 18 rows
+	UNION ALL
+	SELECT * FROM dbo.foundation4B --27 rows
+	UNION ALL
+	SELECT * FROM dbo.foundation5 -- 17 rows
+	UNION ALL
+	SELECT classID, className FROM dbo.seMajorClasses -- 96 rows
+) SELECT DISTINCT * FROM tbl WHERE tbl.classID LIKE @searchTerm
+GO
