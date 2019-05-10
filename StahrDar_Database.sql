@@ -11,7 +11,6 @@
 USE master
 GO
 
-IF DB_ID('StahrDar') IS NOT NULL
 DROP DATABASE StahrDar
 GO
 
@@ -1447,18 +1446,6 @@ AS
 		from (select classID from usersCourses where miamiID = @miamiID) c1 
 		right outer join
 		(select classID from foundation2B) c2
-	on c2.classID = c1.classID
-	where c1.classID is null
-GO
-
---Shows Foundation 2C classes the user has not taken
-CREATE PROCEDURE remainingF2CClasses
-	@miamiID	varchar(50)
-AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
-		right outer join
-		(select classID from foundation2C) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
