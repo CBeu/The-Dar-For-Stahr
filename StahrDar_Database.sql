@@ -1310,7 +1310,7 @@ AS
 	where u.miamiId = @miamiID
 GO
 
---Shows remaining credit hours needed for Foundation 2A
+--Shows remaining credit hours needed for Foundation 2A !
 CREATE PROCEDURE creditsLeftF2A
 	@miamiID	varchar(50)
 AS
@@ -1384,6 +1384,33 @@ AS
 	where u.miamiId = @miamiID
 GO
 
+--Shows remaining credit hours needed for CS Major
+CREATE PROCEDURE creditsLeftCS
+	@miamiID	varchar(50)
+AS
+	select [CreditHoursRemaining4A] = CASE
+		WHEN SUM(cc.classCredit) >= 99 then 0
+		WHEN SUM(cc.classCredit) is null then 99
+		ELSE (99 - SUM(cc.classCredit))END
+	from usersCourses as u
+	join courseCredits as cc on u.classID = cc.classID
+	join csMajorClasses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID
+GO
+
+--Shows remaining credit hours needed for CS Major
+CREATE PROCEDURE creditsLeftSE
+	@miamiID	varchar(50)
+AS
+	select [CreditHoursRemaining4A] = CASE
+		WHEN SUM(cc.classCredit) >= 99 then 0
+		WHEN SUM(cc.classCredit) is null then 99
+		ELSE (99 - SUM(cc.classCredit))END
+	from usersCourses as u
+	join courseCredits as cc on u.classID = cc.classID
+	join seMajorClasses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID
+GO
 
 --Shows remaining credit hours needed for Foundation 4B
 CREATE PROCEDURE creditsLeftF4B
@@ -1416,7 +1443,7 @@ GO
 
 --Shows Foundation 1 classes the user has not taken
 CREATE PROCEDURE remainingF1Classes
-	@miamiID	varchar(50)
+	@miamiID	varchar(50) 
 AS
 	select c2.classID, c2.className
 		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
