@@ -101,14 +101,14 @@ CREATE TABLE users (
     usrID           int IDENTITY(1,1)       NOT NULL,
 	usrLast         nvarchar(30)            NULL,
 	usrFirst        nvarchar(30)            NULL,
-    miamiID         VARCHAR(50)             NOT NULL,
+    miamiId         VARCHAR(50)             NOT NULL,
 	usrpassword		VARCHAR(50)				NOT NULL	
 )
 GO
 
 /****** Object:  Table userAccount     ******/
 CREATE TABLE usersCourses (
-    miamiID         VARCHAR(50)             NOT NULL,
+    miamiId         VARCHAR(50)             NOT NULL,
     classID         VARCHAR(50)             NOT NULL,
 	className		VARCHAR(100)	NOT NULL,
     classStatus     VARCHAR(50)             NOT NULL
@@ -1141,7 +1141,7 @@ GO
 
 --Adds a new course to the userCourses table
 CREATE PROCEDURE AddNewCourse
-	@miamiID         VARCHAR(50),
+	@miamiId         VARCHAR(50),
 	@classID         VARCHAR(50),
 	@className		VARCHAR(100),
 	@classStatus     VARCHAR(50)  
@@ -1149,14 +1149,14 @@ CREATE PROCEDURE AddNewCourse
 AS
 SET NOCOUNT ON
 	INSERT INTO usersCourses(
-		miamiID,    
+		miamiId,    
 		classID,    
 		className,	
 		classStatus
 
 	)
 	VALUES(
-		@miamiID,    
+		@miamiId,    
 		@classID,    
 		@className,	
 		@classStatus
@@ -1175,7 +1175,7 @@ BEGIN
 	FROM usersCourses
 	WHERE @classID = classID AND
 		  @className = className AND
-		  @miamiID = miamiID
+		  @miamiID = miamiId
 END
 GO
 
@@ -1183,47 +1183,47 @@ GO
 CREATE PROCEDURE AddNewUser
 	@usrLast         nvarchar(30),      
 	@usrFirst        nvarchar(30),      
-	@miamiID         VARCHAR(50),
+	@miamiId         VARCHAR(50),
 	@usrPassword	 VARCHAR(50)
 AS
 SET NOCOUNT ON
 	INSERT INTO users(
 		usrLast,
 		usrFirst,
-		miamiID
+		miamiId
 	)
 	VALUES(
 		@usrLast,  
 		@usrFirst ,
-		@miamiID  
+		@miamiId  
 	)
 GO
 
 
 
---Displays all miamiIDs, fir names and last names of all users in db
+--Displays all miamiIds, fir names and last names of all users in db
 CREATE PROCEDURE GetAllUserAccounts
 AS
-	SELECT  u.miamiID, u.usrFirst, u.usrLast
+	SELECT  u.miamiId, u.usrFirst, u.usrLast
 	FROM	users	u
 GO
 
---Displays the miamiID, fir name an last name of a specific user based on user input of miamiID
+--Displays the miamiId, fir name an last name of a specific user based on user input of miamiId
 CREATE PROCEDURE GetSpecificUserAccount
-	@miamiID	VARCHAR(50)
+	@miamiId	VARCHAR(50)
 AS
-	SELECT	u.miamiID, u.usrFirst, u.usrLast
+	SELECT	u.miamiId, u.usrFirst, u.usrLast
 	FROM users	u
-	WHERE	@miamiID = u.miamiID
+	WHERE	@miamiId = u.miamiId
 GO
 
 --Displays all of the courses taken by a specific user
 CREATE PROCEDURE GetAllCoursesTakenByUser
-	@miamiID	VARCHAR(50)
+	@miamiId	VARCHAR(50)
 AS
 	SELECT uc.classID, uc.className, uc.classStatus
 	FROM usersCourses	uc
-	WHERE @miamiID = uc.miamiID
+	WHERE @miamiId = uc.miamiId
 GO
 
 --Potential CS classes that can be taken (not including classes already taken by the user)
@@ -1236,63 +1236,63 @@ GO
 --Potential SE classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialSEClasses
 AS
-	SELECT se.classID,	se.className
+	SELECT se.classId,	se.className
 	FROM seMajorClasses	se
 GO
 
 --Potential f1 classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF1Classes
 AS
-	SELECT f1.classID,	f1.className
+	SELECT f1.classId,	f1.className
 	FROM foundation1	f1
 GO
 
 --Potential f2a classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2AClasses
 AS
-	SELECT f2a.classID,	f2a.className
+	SELECT f2a.classId,	f2a.className
 	FROM foundation2A	f2a
 GO
 
 --Potential f2b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2BClasses
 AS
-	SELECT f2b.classID,	f2b.className
+	SELECT f2b.classId,	f2b.className
 	FROM foundation2B	f2b
 GO
 
 --Potential f2c classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2CClasses
 AS
-	SELECT f2c.classID,	f2c.className
+	SELECT f2c.classId,	f2c.className
 	FROM foundation2c	f2c
 GO
 
 --Potential f3b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF3BClasses
 AS
-	SELECT f3b.classID,	f3b.className
+	SELECT f3b.classId,	f3b.className
 	FROM foundation3B	f3b
 GO
 
 --Potential f4a classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF4AClasses
 AS
-	SELECT f4a.classID,	f4a.className
+	SELECT f4a.classId,	f4a.className
 	FROM foundation4A	f4a
 GO
 
 --Potential f4b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF4BClasses
 AS
-	SELECT f4b.classID,	f4b.className
+	SELECT f4b.classId,	f4b.className
 	FROM foundation4B	f4b
 GO
 
 --Potential f5 classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF5Classes
 AS
-	SELECT f5.classID,	f5.className
+	SELECT f5.classId,	f5.className
 	FROM foundation5	f5
 GO
 --Shows remaining credit hours needed for Foundation 1 
@@ -1307,7 +1307,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join foundation1 as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 --Shows remaining credit hours needed for Foundation 2A
@@ -1321,7 +1321,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join foundation2A as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 --Shows remaining credit hours needed for Foundation 2B
@@ -1335,7 +1335,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join foundation2B as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 
@@ -1350,7 +1350,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join foundation2C as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 
@@ -1366,7 +1366,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join foundation3B as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 
@@ -1381,7 +1381,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join foundation4A as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 --Shows remaining credit hours needed for CS Major
@@ -1395,7 +1395,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join csMajorClasses as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 --Shows remaining credit hours needed for CS Major
@@ -1409,7 +1409,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join seMajorClasses as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 --Shows remaining credit hours needed for Foundation 4B
@@ -1423,7 +1423,7 @@ AS
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
 	join foundation4B as f1 on u.classID = f1.classID
-	where u.miamiID = @miamiID
+	where u.miamiId = @miamiID
 GO
 
 --Shows remaining credit hours needed for Foundation 5
@@ -1437,7 +1437,7 @@ select [CreditHoursRemainingF5] = CASE
 from usersCourses as u
 join courseCredits as cc on u.classID = cc.classID
 join foundation5 as f1 on u.classID = f1.classID
-where u.miamiID = @miamiID
+where u.miamiId = @miamiID
 GO
 
 
