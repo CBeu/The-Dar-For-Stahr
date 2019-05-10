@@ -1266,14 +1266,14 @@ GO
 CREATE PROCEDURE PotentialF2CClasses
 AS
 	SELECT f2c.classId,	f2c.className
-	FROM foundation2B	f2c
+	FROM foundation2c	f2c
 GO
 
 --Potential f3b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF3BClasses
 AS
 	SELECT f3b.classId,	f3b.className
-	FROM foundation2B	f3b
+	FROM foundation3B	f3b
 GO
 
 --Potential f4a classes that can be taken (not including classes already taken by the user)
