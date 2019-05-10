@@ -1310,7 +1310,7 @@ AS
 	where u.miamiId = @miamiID
 GO
 
---Shows remaining credit hours needed for Foundation 2A
+--Shows remaining credit hours needed for Foundation 2A !
 CREATE PROCEDURE creditsLeftF2A
 	@miamiID	varchar(50)
 AS
