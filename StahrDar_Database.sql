@@ -1443,7 +1443,7 @@ GO
 
 --Shows Foundation 1 classes the user has not taken
 CREATE PROCEDURE remainingF1Classes
-	@miamiID	varchar(50)
+	@miamiID	varchar(50) 
 AS
 	select c2.classID, c2.className
 		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
