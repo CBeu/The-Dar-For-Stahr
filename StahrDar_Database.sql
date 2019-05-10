@@ -1166,6 +1166,7 @@ GO
 
 --Delete a course from the usersCourses table
 CREATE PROCEDURE DeleteCourseFromUsersList
+	@miamiID		VARCHAR(50),
 	@classID         VARCHAR(50),
 	@className		VARCHAR(100)
 
@@ -1174,7 +1175,8 @@ BEGIN
 	DELETE 
 	FROM usersCourses
 	WHERE @classID = classID AND
-		  @className = className
+		  @className = className AND
+		  @miamiID = miamiId
 END
 GO
 
