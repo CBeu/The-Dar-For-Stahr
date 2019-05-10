@@ -4,6 +4,9 @@
     <h2>Add or Delete Classes You Have Taken</h2>
 
     <h3>Your Classes</h3>
+        <div>
+        <asp:Label id="lblUser" runat="server" Text="Label"></asp:Label>
+    </div>
     <h4>Miami ID: </h4><input id="txtGetClassesMiamiID" type="text" class="form-control" />
     <span class="btn btn-primary" onclick="getUserCourses()">Get My Classes</span>
     <div>
