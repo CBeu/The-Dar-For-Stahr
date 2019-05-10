@@ -1523,6 +1523,30 @@ AS
 	where c1.classID is null
 GO
 
+--Shows CS classes the user has not taken
+CREATE PROCEDURE remainingCSClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from csMajorClasses) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows SE classes the user has not taken
+CREATE PROCEDURE remainingSEClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from seMajorClasses) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
 CREATE PROCEDURE [dbo].[filterClasses]
 	@searchTerm VARCHAR(50)
 AS
