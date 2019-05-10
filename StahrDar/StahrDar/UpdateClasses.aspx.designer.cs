@@ -11,5 +11,6 @@ namespace StahrDar {
     
     
     public partial class UpdateClasses {
+        protected global::System.Web.UI.WebControls.Label lblUser;
     }
 }
