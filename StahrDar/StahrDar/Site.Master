@@ -51,6 +51,7 @@
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/AllCSECourses">All CSE Courses</a></li>
                         <li><a runat="server" href="~/UpdateClasses">Update Classes</a></li>
+                        <li><a runat="server" href="RemainingCourses">Remaining Courses</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>

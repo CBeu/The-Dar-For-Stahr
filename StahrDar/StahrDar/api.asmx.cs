@@ -453,6 +453,117 @@ namespace _385WebExample {
             send("filterClasses", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void creditsLeftF1(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftF1", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingF1Classes(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingF1Classes", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void creditsLeftF2A(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftF2A", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingF2AClasses(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingF2AClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void creditsLeftF2B(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftF2B", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingF2BClasses(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingF2BClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void creditsLeftF2C(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftF2C", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingF2CClasses(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingF2CClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void creditsLeftF3B(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftF3B", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingF3BClasses(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingF3BClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void creditsLeftF4A(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftF4A", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingF4AClasses(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingF4AClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void creditsLeftF4B(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftF4B", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingF4BClasses(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingF4BClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void creditsLeftF5(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftF5", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingF5Classes(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingF5Classes", serializeStyle.DATA_TABLE);
+        }
         #endregion
     }
 }
