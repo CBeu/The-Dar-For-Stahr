@@ -60,6 +60,21 @@
         <div id="lstClassesFoundation5" style="margin-top:16px;"></div>
     </div>
 
+    <h2>Major Courses</h2>
+    <h4>Computer Science</h4>
+    <span class="btn btn-primary" onclick="loadCS();">See What's Left</span>
+    <div>
+        <div id="creditsCS"></div>
+        <div id="lstClassesCS" style="margin-top:16px;"></div>
+    </div>
+
+    <h4>Software Engineering</h4>
+    <span class="btn btn-primary" onclick="loadSE();">See What's Left</span>
+    <div>
+        <div id="creditsSE"></div>
+        <div id="lstClassesSE" style="margin-top:16px;"></div>
+    </div>
+
     <script>
         var uniqueID = $("#miamiID").val()
         var d = "";
@@ -266,11 +281,53 @@
         }
 
         function loadCS() {
+            // Credits left F5
+            service("creditsLeftCS", "{miamiID: '" + uniqueID + "'}", function (response) {
+                $("#creditsCS").html("Select <b>" + response[0].CreditHoursRemainingF5 / 3 + "</b>" + " classes from this section.");
+            }, function (response) {
+                alert("an error occurred");
+                console.log(response);
+            });
 
+            // Courses not taken F5
+            service("remainingCSClasses", "{miamiID: '" + uniqueID + "'}", function (response) {
+                d = "<table class='table table-striped table-bordered'><th>Class ID</th><th>Class Name</th>"
+                for (var i = 0; i < response.length; i++) {
+                    d += "<tr>" +
+                        "<td id='classID'>" + response[i].classID + "</td>" +
+                        "<td id='className'>" + response[i].className + "</td>" +
+                        "</tr>"
+                }
+                d += "</table>"
+                $("#lstClassesCS").html(d);
+            }, function (response) {
+                console.log(response);
+            });
         }
 
         function loadSE() {
+            // Credits left F5
+            service("creditsLeftSE", "{miamiID: '" + uniqueID + "'}", function (response) {
+                $("#creditsSE").html("Select <b>" + response[0].CreditHoursRemainingF5 / 3 + "</b>" + " classes from this section.");
+            }, function (response) {
+                alert("an error occurred");
+                console.log(response);
+            });
 
+            // Courses not taken F5
+            service("remainingSEClasses", "{miamiID: '" + uniqueID + "'}", function (response) {
+                d = "<table class='table table-striped table-bordered'><th>Class ID</th><th>Class Name</th>"
+                for (var i = 0; i < response.length; i++) {
+                    d += "<tr>" +
+                        "<td id='classID'>" + response[i].classID + "</td>" +
+                        "<td id='className'>" + response[i].className + "</td>" +
+                        "</tr>"
+                }
+                d += "</table>"
+                $("#lstClassesSE").html(d);
+            }, function (response) {
+                console.log(response);
+            });
         }
 
     </script>

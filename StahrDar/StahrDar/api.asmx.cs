@@ -564,6 +564,34 @@ namespace _385WebExample {
             addParam("@miamiID", miamiID);
             send("remainingF5Classes", serializeStyle.DATA_TABLE);
         }
+
+        [WebMethod]
+        public void creditsLeftCS(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftCS", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingCSClasses(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingCSClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void creditsLeftSE(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("creditsLeftSE", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void remainingSEClasses(string miamiID)
+        {
+            addParam("@miamiID", miamiID);
+            send("remainingSEClasses", serializeStyle.DATA_TABLE);
+        }
         #endregion
     }
 }
