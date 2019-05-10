@@ -1418,10 +1418,10 @@ GO
 CREATE PROCEDURE remainingF1Classes
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from foundation1) c2
+		(select classID, className from foundation1) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1430,10 +1430,10 @@ GO
 CREATE PROCEDURE remainingF2AClasses
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from foundation2A) c2
+		(select classID, className from foundation2A) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1442,10 +1442,10 @@ GO
 CREATE PROCEDURE remainingF2BClasses
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from foundation2B) c2
+		(select classID, className from foundation2B) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1454,10 +1454,10 @@ GO
 CREATE PROCEDURE remainingF2CClasses
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from foundation2C) c2
+		(select classID, className from foundation2C) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1466,10 +1466,10 @@ GO
 CREATE PROCEDURE remainingF3BClasses
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from foundation3B) c2
+		(select classID, className from foundation3B) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1478,10 +1478,10 @@ GO
 CREATE PROCEDURE remainingF4AClasses
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from foundation4A) c2
+		(select classID, className from foundation4A) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1490,10 +1490,10 @@ GO
 CREATE PROCEDURE remainingF4BClasses
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from foundation4B) c2
+		(select classID, className from foundation4B) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1502,10 +1502,10 @@ GO
 CREATE PROCEDURE remainingF5Classes
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from foundation5) c2
+		(select classID, className from foundation5) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1514,10 +1514,10 @@ GO
 CREATE PROCEDURE remainingCSClasses
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from csMajorClasses) c2
+		(select classID, className from csMajorClasses) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
@@ -1526,10 +1526,10 @@ GO
 CREATE PROCEDURE remainingSEClasses
 	@miamiID	varchar(50)
 AS
-	select c2.classID
-		from (select classID from usersCourses where miamiID = @miamiID) c1 
+	select c2.classID, c2.className
+		from (select classID, className from usersCourses where miamiID = @miamiID) c1 
 		right outer join
-		(select classID from seMajorClasses) c2
+		(select classID, className from seMajorClasses) c2
 	on c2.classID = c1.classID
 	where c1.classID is null
 GO
