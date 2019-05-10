@@ -12,7 +12,7 @@ USE master
 GO
 
 IF DB_ID('StahrDar') IS NOT NULL
-    DROP DATABASE StahrDar
+DROP DATABASE StahrDar
 GO
 
 /****** Object:  Database StahrDar    ******/
@@ -1229,102 +1229,71 @@ GO
 CREATE PROCEDURE PotentialCSClasses
 AS
 	SELECT cs.classID,	cs.className
-	FROM csMajorClasses	cs,
-		 usersCourses	uc
-	WHERE cs.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM csMajorClasses	cs
 GO
 
 --Potential SE classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialSEClasses
 AS
 	SELECT se.classId,	se.className
-	FROM seMajorClasses	se,
-		 usersCourses	uc
-	WHERE se.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM seMajorClasses	se
 GO
 
 --Potential f1 classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF1Classes
 AS
 	SELECT f1.classId,	f1.className
-	FROM foundation1	f1,
-		 usersCourses	uc
-	WHERE f1.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation1	f1
 GO
 
 --Potential f2a classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2AClasses
 AS
 	SELECT f2a.classId,	f2a.className
-	FROM foundation2A	f2a,
-		 usersCourses	uc
-	WHERE f2a.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation2A	f2a
 GO
 
 --Potential f2b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2BClasses
 AS
 	SELECT f2b.classId,	f2b.className
-	FROM foundation2B	f2b,
-		 usersCourses	uc
-	WHERE f2b.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation2B	f2b
 GO
 
 --Potential f2c classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2CClasses
 AS
 	SELECT f2c.classId,	f2c.className
-	FROM foundation2B	f2c,
-		 usersCourses	uc
-	WHERE f2c.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation2B	f2c
 GO
 
 --Potential f3b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF3BClasses
 AS
 	SELECT f3b.classId,	f3b.className
-	FROM foundation2B	f3b,
-		 usersCourses	uc
-	WHERE f3b.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation2B	f3b
 GO
 
 --Potential f4a classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF4AClasses
 AS
 	SELECT f4a.classId,	f4a.className
-	FROM foundation4A	f4a,
-		 usersCourses	uc
-	WHERE f4a.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation4A	f4a
 GO
 
 --Potential f4b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF4BClasses
 AS
 	SELECT f4b.classId,	f4b.className
-	FROM foundation4B	f4b,
-		 usersCourses	uc
-	WHERE f4b.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation4B	f4b
 GO
 
 --Potential f5 classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF5Classes
 AS
 	SELECT f5.classId,	f5.className
-	FROM foundation5	f5,
-		 usersCourses	uc
-	WHERE f5.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation5	f5
 GO
-
 --Shows remaining credit hours needed for Foundation 1 
 CREATE PROCEDURE creditsLeftF1
 	@miamiID	varchar(50)
@@ -1441,6 +1410,115 @@ from usersCourses as u
 join courseCredits as cc on u.classID = cc.classID
 join foundation5 as f1 on u.classID = f1.classID
 where u.miamiId = @miamiID
+GO
+
+
+--Shows Foundation 1 classes the user has not taken
+CREATE PROCEDURE remainingF1Classes
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation1) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows Foundation 2A classes the user has not taken
+CREATE PROCEDURE remainingF2AClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation2A) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows Foundation 2B classes the user has not taken
+CREATE PROCEDURE remainingF2BClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation2B) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows Foundation 2C classes the user has not taken
+CREATE PROCEDURE remainingF2CClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation2C) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows Foundation 2C classes the user has not taken
+CREATE PROCEDURE remainingF2CClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation2C) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows Foundation 3B classes the user has not taken
+CREATE PROCEDURE remainingF3BClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation3B) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows Foundation 4A classes the user has not taken
+CREATE PROCEDURE remainingF4AClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation4A) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows Foundation 4B classes the user has not taken
+CREATE PROCEDURE remainingF4BClasses
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation4B) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
+GO
+
+--Shows Foundation 5 classes the user has not taken
+CREATE PROCEDURE remainingF5Classes
+	@miamiID	varchar(50)
+AS
+	select c2.classID
+		from (select classID from usersCourses where miamiID = @miamiID) c1 
+		right outer join
+		(select classID from foundation5) c2
+	on c2.classID = c1.classID
+	where c1.classID is null
 GO
 
 CREATE PROCEDURE [dbo].[filterClasses]
