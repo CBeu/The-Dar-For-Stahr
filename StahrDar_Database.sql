@@ -1231,100 +1231,70 @@ GO
 CREATE PROCEDURE PotentialCSClasses
 AS
 	SELECT cs.classID,	cs.className
-	FROM csMajorClasses	cs,
-		 usersCourses	uc
-	WHERE cs.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM csMajorClasses	cs
 GO
 
 --Potential SE classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialSEClasses
 AS
 	SELECT se.classId,	se.className
-	FROM seMajorClasses	se,
-		 usersCourses	uc
-	WHERE se.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM seMajorClasses	se
 GO
 
 --Potential f1 classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF1Classes
 AS
 	SELECT f1.classId,	f1.className
-	FROM foundation1	f1,
-		 usersCourses	uc
-	WHERE f1.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation1	f1
 GO
 
 --Potential f2a classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2AClasses
 AS
 	SELECT f2a.classId,	f2a.className
-	FROM foundation2A	f2a,
-		 usersCourses	uc
-	WHERE f2a.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation2A	f2a
 GO
 
 --Potential f2b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2BClasses
 AS
 	SELECT f2b.classId,	f2b.className
-	FROM foundation2B	f2b,
-		 usersCourses	uc
-	WHERE f2b.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation2B	f2b
 GO
 
 --Potential f2c classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF2CClasses
 AS
 	SELECT f2c.classId,	f2c.className
-	FROM foundation2B	f2c,
-		 usersCourses	uc
-	WHERE f2c.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation2B	f2c
 GO
 
 --Potential f3b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF3BClasses
 AS
 	SELECT f3b.classId,	f3b.className
-	FROM foundation2B	f3b,
-		 usersCourses	uc
-	WHERE f3b.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation2B	f3b
 GO
 
 --Potential f4a classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF4AClasses
 AS
 	SELECT f4a.classId,	f4a.className
-	FROM foundation4A	f4a,
-		 usersCourses	uc
-	WHERE f4a.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation4A	f4a
 GO
 
 --Potential f4b classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF4BClasses
 AS
 	SELECT f4b.classId,	f4b.className
-	FROM foundation4B	f4b,
-		 usersCourses	uc
-	WHERE f4b.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation4B	f4b
 GO
 
 --Potential f5 classes that can be taken (not including classes already taken by the user)
 CREATE PROCEDURE PotentialF5Classes
 AS
 	SELECT f5.classId,	f5.className
-	FROM foundation5	f5,
-		 usersCourses	uc
-	WHERE f5.classID NOT IN(
-		SELECT uc.classID FROM usersCourses)
+	FROM foundation5	f5
 GO
 
 --Shows remaining credit hours needed for Foundation 1 
