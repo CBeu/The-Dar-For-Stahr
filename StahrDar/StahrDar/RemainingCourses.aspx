@@ -4,6 +4,9 @@
     <h4>Miami ID: </h4><input id="miamiID" type="text" class="form-control" />
 
     <h2>Miami Plan Foundations</h2>
+
+
+
     <h4>Foundation 1</h4>
     <span class="btn btn-primary" onclick="loadF1();">See What's Left</span>
     <div>
@@ -283,7 +286,7 @@
         function loadCS() {
             // Credits left F5
             service("creditsLeftCS", "{miamiID: '" + uniqueID + "'}", function (response) {
-                $("#creditsCS").html("Select <b>" + response[0].CreditHoursRemainingF5 / 3 + "</b>" + " classes from this section.");
+                $("#creditsCS").html("Select <b>" + response[0].CreditHoursRemainingCS / 3 + "</b>" + " classes from this section.");
             }, function (response) {
                 alert("an error occurred");
                 console.log(response);
@@ -308,7 +311,7 @@
         function loadSE() {
             // Credits left F5
             service("creditsLeftSE", "{miamiID: '" + uniqueID + "'}", function (response) {
-                $("#creditsSE").html("Select <b>" + response[0].CreditHoursRemainingF5 / 3 + "</b>" + " classes from this section.");
+                $("#creditsSE").html("Select <b>" + response[0].CreditHoursRemainingSE / 3 + "</b>" + " classes from this section.");
             }, function (response) {
                 alert("an error occurred");
                 console.log(response);
