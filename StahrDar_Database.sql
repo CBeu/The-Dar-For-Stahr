@@ -1221,88 +1221,6 @@ AS
 	where fc.foundationID = @foundationID
 GO
 
---Shows remaining credit hours needed for Foundation Courses based on FoundationID
-
---Shows remaining credit hours needed for Foundation 1 
-CREATE PROCEDURE creditsLeftF1
-	@miamiID	varchar(50)
-AS
-	select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(f1.classCredit) >= 3 then 0
-		WHEN SUM(f1.classCredit) is null then 3
-		ELSE (3 - SUM(f1.classCredit))END
-	from usersCourses as u
-	join FoundationCourses as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID AND f1.foundationID = 1
-GO
-
---Shows remaining credit hours needed for Foundation 2A !
-CREATE PROCEDURE creditsLeftF2A
-	@miamiID	varchar(50)
-AS
-	select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(f1.classCredit) >= 3 then 0
-		WHEN SUM(f1.classCredit) is null then 3
-		ELSE (3 - SUM(f1.classCredit))END
-	from usersCourses as u
-	join FoundationCourses as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID AND f1.foundationID = 2
-GO
-
---Shows remaining credit hours needed for Foundation 2B
-CREATE PROCEDURE creditsLeftF2B
-	@miamiID	varchar(50)
-AS
-	select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(f1.classCredit) >= 3 then 0
-		WHEN SUM(f1.classCredit) is null then 3
-		ELSE (3 - SUM(f1.classCredit))END
-	from usersCourses as u
-	join FoundationCourses as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID AND f1.foundationID = 3
-GO
-
-
---Shows remaining credit hours needed for Foundation 2C
-CREATE PROCEDURE creditsLeftF2C
-	@miamiID	varchar(50)
-AS
-	select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(f1.classCredit) >= 3 then 0
-		WHEN SUM(f1.classCredit) is null then 3
-		ELSE (3 - SUM(f1.classCredit))END
-	from usersCourses as u
-	join FoundationCourses as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID AND f1.foundationID = 4
-GO
-
-
---Shows remaining credit hours needed for Foundation 3B
-CREATE PROCEDURE creditsLeftF3B
-	@miamiID	varchar(50)
-AS
-	select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(f1.classCredit) >= 6 then 0
-		WHEN SUM(f1.classCredit) is null then 6
-		ELSE (6 - SUM(f1.classCredit))END
-	from usersCourses as u
-	join FoundationCourses as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID AND f1.foundationID = 5
-GO
-
-
---Shows remaining credit hours needed for Foundation 4A
-CREATE PROCEDURE creditsLeftF4A
-	@miamiID	varchar(50)
-AS
-	select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(f1.classCredit) >= 3 then 0
-		WHEN SUM(f1.classCredit) is null then 3
-		ELSE (3 - SUM(f1.classCredit))END
-	from usersCourses as u
-	join FoundationCourses as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID AND f1.foundationID = 6
-GO
 
 --Shows remaining credit hours needed for CS Major
 CREATE PROCEDURE creditsLeftCS
@@ -1332,30 +1250,27 @@ AS
 	where u.miamiId = @miamiID
 GO
 
---Shows remaining credit hours needed for Foundation 4B
-CREATE PROCEDURE creditsLeftF4B
-	@miamiID	varchar(50)
+--Calculates remaing credit hours needed for each foundationID
+CREATE PROCEDURE creditsLeftFoundation
+	@miamiID		varchar(50),
+	@foundationID	int
 AS
-	select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(f1.classCredit) >= 3 then 0
-		WHEN SUM(f1.classCredit) is null then 3
-		ELSE (3 - SUM(f1.classCredit))END
-	from usersCourses as u
-	join FoundationCourses as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID AND f1.foundationID = 7
-GO
-
---Shows remaining credit hours needed for Foundation 5
-CREATE PROCEDURE creditsLeftF5
-	@miamiID	varchar(50)
-AS
-select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(f1.classCredit) >= 3 then 0
-		WHEN SUM(f1.classCredit) is null then 3
-		ELSE (3 - SUM(f1.classCredit))END
-	from usersCourses as u
-	join FoundationCourses as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID AND f1.foundationID = 8
+	IF @foundationID = 5 
+		select [CreditHoursRemainingF2A] = CASE
+			WHEN SUM(f1.classCredit) >= 6 then 0
+			WHEN SUM(f1.classCredit) is null then 6
+			ELSE (6 - SUM(f1.classCredit))END
+		from usersCourses as u
+		join FoundationCourses as f1 on u.classID = f1.classID
+		where u.miamiId = @miamiID AND f1.foundationID = @foundationID
+	ELSE
+		select [CreditHoursRemainingF2A] = CASE
+			WHEN SUM(f1.classCredit) >= 3 then 0
+			WHEN SUM(f1.classCredit) is null then 3
+			ELSE (3 - SUM(f1.classCredit))END
+		from usersCourses as u
+		join FoundationCourses as f1 on u.classID = f1.classID
+		where u.miamiId = @miamiID AND f1.foundationID = @foundationID
 GO
 
 --Shows foundation classes the user has not taken baesd on foundationID
