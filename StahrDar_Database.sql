@@ -41,7 +41,7 @@ GO
 
 CREATE TABLE Foundation (
 	foundationID	INT	IDENTITY(1,1)		Not Null,
-	descrition		varchar(50)				Not Null,
+	discription		varchar(50)				Not Null,
 	PRIMARY KEY (foundationID)
 )
 GO
@@ -55,65 +55,6 @@ CREATE TABLE FoundationCourses (
 	PRIMARY KEY (foundationCourseID)
 )
 GO
-
-
-
-/****** Object:  Table foundation1     ******/
-CREATE TABLE foundation1(
-    classID           VARCHAR(50)             NOT NULL,
-	className       varchar(100)            NOT NULL
-)
-GO
-
-/****** Object:  Table foundation2A     ******/
-CREATE TABLE foundation2A(
-    classID           VARCHAR(50)             NOT NULL,
-	className       varchar(100)            NOT NULL
-)
-GO
-
-/****** Object:  Table foundation2B     ******/
-CREATE TABLE foundation2B(
-    classID           VARCHAR(50)             NOT NULL,
-	className       varchar(100)            NOT NULL
-    )
-GO
-
-/****** Object:  Table foundation2C     ******/
-CREATE TABLE foundation2C(
-    classID           VARCHAR(50)             NOT NULL,
-	className       varchar(100)            NOT NULL
-)
-GO
-
-/****** Object:  Table foundation3B     ******/
-CREATE TABLE foundation3B(
-    classID           VARCHAR(50)             NOT NULL,
-	className       varchar(100)            NOT NULL
-)
-GO
-
-/****** Object:  Table foundation4A     ******/
-CREATE TABLE foundation4A(
-    classID           VARCHAR(50)             NOT NULL,
-	className       varchar(100)            NOT NULL
-)
-GO
-
-/****** Object:  Table foundation4B     ******/
-CREATE TABLE foundation4B(
-    classID           VARCHAR(50)             NOT NULL,
-	className       varchar(100)            NOT NULL
-)
-GO
-
-/****** Object:  Table foundation5     ******/
-CREATE TABLE foundation5(
-    classID           VARCHAR(50)             NOT NULL,
-	className       varchar(100)            NOT NULL
-)
-GO
-
 
 /****** Object:  Table users     ******/
 CREATE TABLE users (
