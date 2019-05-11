@@ -4,10 +4,6 @@
     <h2>Add or Delete Classes You Have Taken</h2>
 
     <h3>Your Classes</h3>
-        <div>
-        <asp:Label id="lblUser" runat="server" Text="Label"></asp:Label>
-    </div>
-    <h4>Miami ID: </h4><input id="txtGetClassesMiamiID" type="text" class="form-control" />
     <span class="btn btn-primary" onclick="getUserCourses()">Get My Classes</span>
     <div>
         <div id="lstClasses" style="margin-top:16px;"></div>
@@ -15,16 +11,11 @@
 
     
     <h3>Add Class</h3>
-    <h4>Miami ID: </h4><input id="txtMiamiID" type="text" class="form-control" />
     <h4>Course (ex. CSE385): </h4><input id="txtCourse" type="text" class="form-control" />
     <h4>Course Name (ex. Database Systems): </h4><input id="txtCourseName" type="text" class="form-control" />
     <h4>Status (ex. IP or C)</h4><input id="txtStatus" type="text" class="form-control" />
     <span class="btn btn-primary" onclick="addNewCourse();">Add Course</span>
     <div id="addSuccess"></div>
-
-    <h3>AJAX Search For Class</h3>
-    <input type="text" class="form-control" id="txtClassNum" />
-    <div id="lstClassResults"></div>
 
     <script>
 
@@ -42,16 +33,20 @@
             });
         });
 
-        function getUserCourses(miamiID) {
+        var count = 0;
+
+        function getUserCourses() {
+            //alert('getUserCourses ' + ++count);
             var d = "";
-            service("getAllCoursesTakenByUser", "{miamiId: '" + $("#txtGetClassesMiamiID").val() + "'}", function (response) {
+            $("#addSuccess").html("");
+            service("getAllCoursesTakenByUser", "{}", function (response) {
                 d = "<table class='table table-striped table-bordered'><th>Class ID</th><th>Class Name</th><th>Status</th><th>Remove</th>"
                 for (var i = 0; i < response.length; i++) {
                     d += "<tr>" +
                         "<td id='classID'>" + response[i].classID + "</td>" +
                         "<td id='className'>" + response[i].className + "</td>" +
                         "<td>" + response[i].classStatus + "</td>" +
-                        "<td><span class='glyphicon glyphicon-trash' onclick='deleteUserCourse();' id='delButton'></span></td>" + 
+                        "<td><span class='glyphicon glyphicon-trash' id='delButton' onclick='deleteUserCourse(" + response[i].userCourseId + ");'></span></td>" + 
                         "</tr>"
                 }
                 d += "</table>"
@@ -62,27 +57,27 @@
         }
 
         function addNewCourse() {
-            service("AddNewCourse", "{miamiId: '" + $("#txtMiamiID").val() + "', classID: '" + $("#txtCourse").val() + "', className: '" + $("#txtCourseName").val() + "', classStatus: '" + $("#txtStatus").val() + "' }",
+            service("AddNewCourse", "{classID: '" + $("#txtCourse").val() + "', className: '" + $("#txtCourseName").val() + "', classStatus: '" + $("#txtStatus").val() + "' }",
             function (response) {
                 console.log(response);
-                $("#addSuccess").html("Course Added Successfully. Refresh your course list above.");
-                //alert($("#txtMiamiID").val())
-                getUserCourses($("#txtMiamiID").val());
+                $("#addSuccess").html("Course Added Successfully.");
+                    getUserCourses();
                 }, function (response) {
-                alert("Error adding this class to your course lists.");
-                console.log(response);
+                    alert("Error adding this class to your course lists.");
+                    console.log(response);
             });
         }
 
-        function deleteUserCourse() {
-            service("DeleteCourseFromUsersList", "{miamiId: '" + $("#txtGetClassesMiamiID").val() + "', classID: '" + $("#classID").text() + "', className: '" + $("#className").text() + "' }",
+        function deleteUserCourse(userCourseId) {
+            service("DeleteCourseFromUsersList", "{userCourseId: " + userCourseId + " }",
 
                 function (response) {
-                console.log(response);
-                getUserCourses($("#txtGetClassesMiamiID").val());
+                    
+                    console.log(response);
+                    getUserCourses();
                 }, function (response) {
-                alert("FATAL ERROR :(");
-                console.log(response);
+                    alert("FATAL ERROR");
+                    console.log(response);
             });
         }
 

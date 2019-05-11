@@ -14,18 +14,6 @@ namespace StahrDar
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // lblUser.Text = User.Identity.Name.Split('@')[0];
-            lblUser.Text = User.Identity.Name;
-            string login = lblUser.Text.ToString();
-            if (!String.IsNullOrWhiteSpace(login))
-            {
-                int charLocation = login.IndexOf('@');
-                if (charLocation > 0)
-                {
-                    login = login.Substring(0, charLocation);
-                }
-            }
-            lblUser.Text = login;
         }
     }
 }

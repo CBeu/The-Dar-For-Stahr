@@ -39,6 +39,9 @@ CREATE TABLE seMajorClasses(
 )
 GO
 
+
+
+
 /****** Object:  Table foundation1     ******/
 CREATE TABLE foundation1(
     classID           VARCHAR(50)             NOT NULL,

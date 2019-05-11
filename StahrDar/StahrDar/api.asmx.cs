@@ -360,15 +360,17 @@ namespace _385WebExample {
 		#region ######################################################################################################################################################## Methods
 
         [WebMethod]
-        public void getAllCoursesTakenByUser(string miamiId)
+        public void getAllCoursesTakenByUser()
         {
-            addParam("@miamiId", miamiId);
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
             send("GetAllCoursesTakenByUser", serializeStyle.DATA_TABLE);
         }
 
         [WebMethod]
-        public void AddNewCourse(string miamiId, string classID, string className, string classStatus) {
-            addParam("@miamiId", miamiId);
+        public void AddNewCourse(string classID, string className, string classStatus) {
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
             addParam("@classID", classID);
             addParam("@className", className);
             addParam("@classStatus", classStatus);
@@ -437,12 +439,12 @@ namespace _385WebExample {
         }
 
         [WebMethod]
-        public void DeleteCourseFromUsersList(string miamiId, string classID, string className)
+        public void DeleteCourseFromUsersList(string userCourseId)
         {
-            addParam("@miamiId", miamiId);
-            addParam("@classID", classID);
-            addParam("@className", className);
-
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0,uid.IndexOf("@")));
+            addParam("@userCourseId", userCourseId);
+      
             send("DeleteCourseFromUsersList", serializeStyle.DATA_TABLE);
         }
 
