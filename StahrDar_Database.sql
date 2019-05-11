@@ -1286,13 +1286,11 @@ GO
 CREATE PROCEDURE creditsLeftF1
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemainingF1] = CASE
-		WHEN SUM(cc.classCredit) >= 3 then 0
-		WHEN SUM(cc.classCredit) is null then 3
-		ELSE ((3 - SUM(cc.classCredit)))
-	END
+	select [CreditHoursRemainingF2A] = CASE
+		WHEN SUM(f1.classCredit) >= 3 then 0
+		WHEN SUM(f1.classCredit) is null then 3
+		ELSE (3 - SUM(f1.classCredit))END
 	from usersCourses as u
-	join courseCredits as cc on u.classID = cc.classID
 	join FoundationCourses as f1 on u.classID = f1.classID
 	where u.miamiId = @miamiID AND f1.foundationID = 1
 GO
@@ -1302,11 +1300,10 @@ CREATE PROCEDURE creditsLeftF2A
 	@miamiID	varchar(50)
 AS
 	select [CreditHoursRemainingF2A] = CASE
-		WHEN SUM(cc.classCredit) >= 3 then 0
-		WHEN SUM(cc.classCredit) is null then 3
-		ELSE (3 - SUM(cc.classCredit))END
+		WHEN SUM(f1.classCredit) >= 3 then 0
+		WHEN SUM(f1.classCredit) is null then 3
+		ELSE (3 - SUM(f1.classCredit))END
 	from usersCourses as u
-	join courseCredits as cc on u.classID = cc.classID
 	join FoundationCourses as f1 on u.classID = f1.classID
 	where u.miamiId = @miamiID AND f1.foundationID = 2
 GO
@@ -1315,12 +1312,11 @@ GO
 CREATE PROCEDURE creditsLeftF2B
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemainingF2B] = CASE
-		WHEN SUM(cc.classCredit) >= 3 then 0
-		WHEN SUM(cc.classCredit) is null then 3
-		ELSE (3 - SUM(cc.classCredit))END
+	select [CreditHoursRemainingF2A] = CASE
+		WHEN SUM(f1.classCredit) >= 3 then 0
+		WHEN SUM(f1.classCredit) is null then 3
+		ELSE (3 - SUM(f1.classCredit))END
 	from usersCourses as u
-	join courseCredits as cc on u.classID = cc.classID
 	join FoundationCourses as f1 on u.classID = f1.classID
 	where u.miamiId = @miamiID AND f1.foundationID = 3
 GO
@@ -1330,12 +1326,11 @@ GO
 CREATE PROCEDURE creditsLeftF2C
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemainingF2C] = CASE
-		WHEN SUM(cc.classCredit) >= 3 then 0
-		WHEN SUM(cc.classCredit) is null then 3
-		ELSE (3 - SUM(cc.classCredit))END
+	select [CreditHoursRemainingF2A] = CASE
+		WHEN SUM(f1.classCredit) >= 3 then 0
+		WHEN SUM(f1.classCredit) is null then 3
+		ELSE (3 - SUM(f1.classCredit))END
 	from usersCourses as u
-	join courseCredits as cc on u.classID = cc.classID
 	join FoundationCourses as f1 on u.classID = f1.classID
 	where u.miamiId = @miamiID AND f1.foundationID = 4
 GO
@@ -1345,13 +1340,11 @@ GO
 CREATE PROCEDURE creditsLeftF3B
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemainingF3B] = CASE
-		WHEN SUM(cc.classCredit) >= 6 then 0
-		WHEN SUM(cc.classCredit) is null then 6
-		ELSE (6 - SUM(cc.classCredit))
-		END
+	select [CreditHoursRemainingF2A] = CASE
+		WHEN SUM(f1.classCredit) >= 6 then 0
+		WHEN SUM(f1.classCredit) is null then 6
+		ELSE (6 - SUM(f1.classCredit))END
 	from usersCourses as u
-	join courseCredits as cc on u.classID = cc.classID
 	join FoundationCourses as f1 on u.classID = f1.classID
 	where u.miamiId = @miamiID AND f1.foundationID = 5
 GO
@@ -1361,12 +1354,11 @@ GO
 CREATE PROCEDURE creditsLeftF4A
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemaining4A] = CASE
-		WHEN SUM(cc.classCredit) >= 3 then 0
-		WHEN SUM(cc.classCredit) is null then 3
-		ELSE (3 - SUM(cc.classCredit))END
+	select [CreditHoursRemainingF2A] = CASE
+		WHEN SUM(f1.classCredit) >= 3 then 0
+		WHEN SUM(f1.classCredit) is null then 3
+		ELSE (3 - SUM(f1.classCredit))END
 	from usersCourses as u
-	join courseCredits as cc on u.classID = cc.classID
 	join FoundationCourses as f1 on u.classID = f1.classID
 	where u.miamiId = @miamiID AND f1.foundationID = 6
 GO
@@ -1403,12 +1395,11 @@ GO
 CREATE PROCEDURE creditsLeftF4B
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemainingF4B] = CASE
-		WHEN SUM(cc.classCredit) >= 3 then 0
-		WHEN SUM(cc.classCredit) is null then 3
-		ELSE (3 - SUM(cc.classCredit))END
+	select [CreditHoursRemainingF2A] = CASE
+		WHEN SUM(f1.classCredit) >= 3 then 0
+		WHEN SUM(f1.classCredit) is null then 3
+		ELSE (3 - SUM(f1.classCredit))END
 	from usersCourses as u
-	join courseCredits as cc on u.classID = cc.classID
 	join FoundationCourses as f1 on u.classID = f1.classID
 	where u.miamiId = @miamiID AND f1.foundationID = 7
 GO
@@ -1417,13 +1408,12 @@ GO
 CREATE PROCEDURE creditsLeftF5
 	@miamiID	varchar(50)
 AS
-select [CreditHoursRemainingF5] = CASE
-	WHEN SUM(cc.classCredit) >= 3 then 0
-	WHEN SUM(cc.classCredit) is null then 3
-	ELSE (3 - SUM(cc.classCredit))END
-from usersCourses as u
-join courseCredits as cc on u.classID = cc.classID
-join FoundationCourses as f1 on u.classID = f1.classID
+select [CreditHoursRemainingF2A] = CASE
+		WHEN SUM(f1.classCredit) >= 3 then 0
+		WHEN SUM(f1.classCredit) is null then 3
+		ELSE (3 - SUM(f1.classCredit))END
+	from usersCourses as u
+	join FoundationCourses as f1 on u.classID = f1.classID
 	where u.miamiId = @miamiID AND f1.foundationID = 8
 GO
 
