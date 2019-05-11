@@ -1293,8 +1293,8 @@ AS
 	END
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
-	join foundation1 as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID
+	join FoundationCourses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID AND f1.foundationID = 1
 GO
 
 --Shows remaining credit hours needed for Foundation 2A !
@@ -1307,8 +1307,8 @@ AS
 		ELSE (3 - SUM(cc.classCredit))END
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
-	join foundation2A as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID
+	join FoundationCourses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID AND f1.foundationID = 2
 GO
 
 --Shows remaining credit hours needed for Foundation 2B
@@ -1321,8 +1321,8 @@ AS
 		ELSE (3 - SUM(cc.classCredit))END
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
-	join foundation2B as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID
+	join FoundationCourses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID AND f1.foundationID = 3
 GO
 
 
@@ -1336,8 +1336,8 @@ AS
 		ELSE (3 - SUM(cc.classCredit))END
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
-	join foundation2C as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID
+	join FoundationCourses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID AND f1.foundationID = 4
 GO
 
 
@@ -1352,8 +1352,8 @@ AS
 		END
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
-	join foundation3B as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID
+	join FoundationCourses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID AND f1.foundationID = 5
 GO
 
 
@@ -1367,8 +1367,8 @@ AS
 		ELSE (3 - SUM(cc.classCredit))END
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
-	join foundation4A as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID
+	join FoundationCourses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID AND f1.foundationID = 6
 GO
 
 --Shows remaining credit hours needed for CS Major
@@ -1409,8 +1409,8 @@ AS
 		ELSE (3 - SUM(cc.classCredit))END
 	from usersCourses as u
 	join courseCredits as cc on u.classID = cc.classID
-	join foundation4B as f1 on u.classID = f1.classID
-	where u.miamiId = @miamiID
+	join FoundationCourses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID AND f1.foundationID = 7
 GO
 
 --Shows remaining credit hours needed for Foundation 5
@@ -1423,8 +1423,8 @@ select [CreditHoursRemainingF5] = CASE
 	ELSE (3 - SUM(cc.classCredit))END
 from usersCourses as u
 join courseCredits as cc on u.classID = cc.classID
-join foundation5 as f1 on u.classID = f1.classID
-where u.miamiId = @miamiID
+join FoundationCourses as f1 on u.classID = f1.classID
+	where u.miamiId = @miamiID AND f1.foundationID = 8
 GO
 
 --Shows foundation classes the user has not taken baesd on foundationID
