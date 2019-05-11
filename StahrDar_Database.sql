@@ -1257,7 +1257,7 @@ AS
 	WHERE @miamiId = uc.miamiId
 GO
 
---Potential CS classes that can be taken (not including classes already taken by the user)
+--Potential CS classes that can be taken (not including classes already taken by the user)!
 CREATE PROCEDURE PotentialCSClasses
 AS
 	SELECT cs.classID,	cs.className
