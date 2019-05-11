@@ -1271,61 +1271,15 @@ AS
 	FROM seMajorClasses	se
 GO
 
---Potential f1 classes that can be taken (not including classes already taken by the user)
-CREATE PROCEDURE PotentialF1Classes
+--Potential Foundation Courses based on foundationID sent
+CREATE PROCEDURE PotentialFoundationClasses
+	@foundationID	int
 AS
-	SELECT f1.classId,	f1.className
-	FROM foundation1	f1
+	select fc.classID, fc.className
+	from FoundationCourses as fc
+	where fc.foundationID = @foundationID
 GO
 
---Potential f2a classes that can be taken (not including classes already taken by the user)
-CREATE PROCEDURE PotentialF2AClasses
-AS
-	SELECT f2a.classId,	f2a.className
-	FROM foundation2A	f2a
-GO
-
---Potential f2b classes that can be taken (not including classes already taken by the user)
-CREATE PROCEDURE PotentialF2BClasses
-AS
-	SELECT f2b.classId,	f2b.className
-	FROM foundation2B	f2b
-GO
-
---Potential f2c classes that can be taken (not including classes already taken by the user)
-CREATE PROCEDURE PotentialF2CClasses
-AS
-	SELECT f2c.classId,	f2c.className
-	FROM foundation2c	f2c
-GO
-
---Potential f3b classes that can be taken (not including classes already taken by the user)
-CREATE PROCEDURE PotentialF3BClasses
-AS
-	SELECT f3b.classId,	f3b.className
-	FROM foundation3B	f3b
-GO
-
---Potential f4a classes that can be taken (not including classes already taken by the user)
-CREATE PROCEDURE PotentialF4AClasses
-AS
-	SELECT f4a.classId,	f4a.className
-	FROM foundation4A	f4a
-GO
-
---Potential f4b classes that can be taken (not including classes already taken by the user)
-CREATE PROCEDURE PotentialF4BClasses
-AS
-	SELECT f4b.classId,	f4b.className
-	FROM foundation4B	f4b
-GO
-
---Potential f5 classes that can be taken (not including classes already taken by the user)
-CREATE PROCEDURE PotentialF5Classes
-AS
-	SELECT f5.classId,	f5.className
-	FROM foundation5	f5
-GO
 --Shows remaining credit hours needed for Foundation 1 
 CREATE PROCEDURE creditsLeftF1
 	@miamiID	varchar(50)
