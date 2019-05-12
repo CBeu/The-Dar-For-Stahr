@@ -1316,21 +1316,21 @@ AS
 	WITH tbl AS (
 	SELECT classID, className FROM dbo.csMajorClasses --124 rows
 	UNION ALL 
-	SELECT * FROM dbo.foundation1 -- 2 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 1 -- 2 rows
 	UNION ALL 
-	SELECT * FROM dbo.foundation2A -- 35 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 2 -- 35 rows
 	UNION ALL
-	SELECT * FROM dbo.foundation2B -- 105 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 3 -- 105 rows
 	UNION ALL
-	SELECT * FROM dbo.foundation2C -- 66 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 4 -- 66 rows
 	UNION ALL
-	SELECT * FROM dbo.foundation3B -- 79 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 5 -- 79 rows
 	UNION ALL
-	SELECT * FROM dbo.foundation4A -- 18 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 6 -- 18 rows
 	UNION ALL
-	SELECT * FROM dbo.foundation4B --27 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 7 --27 rows
 	UNION ALL
-	SELECT * FROM dbo.foundation5 -- 17 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 8 -- 17 rows
 	UNION ALL
 	SELECT classID, className FROM dbo.seMajorClasses -- 96 rows
 ) SELECT DISTINCT * FROM tbl WHERE tbl.classID LIKE @searchTerm
