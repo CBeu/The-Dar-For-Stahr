@@ -1225,7 +1225,7 @@ GO
 CREATE PROCEDURE creditsLeftCS
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemaining4A] = CASE
+	select [CreditHoursRemaining] = CASE
 		WHEN SUM(cc.classCredit) >= 99 then 0
 		WHEN SUM(cc.classCredit) is null then 99
 		ELSE (99 - SUM(cc.classCredit))END
@@ -1239,7 +1239,7 @@ GO
 CREATE PROCEDURE creditsLeftSE
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemaining4A] = CASE
+	select [CreditHoursRemaining] = CASE
 		WHEN SUM(cc.classCredit) >= 99 then 0
 		WHEN SUM(cc.classCredit) is null then 99
 		ELSE (99 - SUM(cc.classCredit))END
