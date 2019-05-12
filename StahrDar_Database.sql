@@ -1225,7 +1225,7 @@ GO
 CREATE PROCEDURE creditsLeftCS
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemaining] = CASE
+	select [classCredit] = CASE
 		WHEN SUM(cc.classCredit) >= 99 then 0
 		WHEN SUM(cc.classCredit) is null then 99
 		ELSE (99 - SUM(cc.classCredit))END
@@ -1239,7 +1239,7 @@ GO
 CREATE PROCEDURE creditsLeftSE
 	@miamiID	varchar(50)
 AS
-	select [CreditHoursRemaining] = CASE
+	select [classCredit] =CASE
 		WHEN SUM(cc.classCredit) >= 99 then 0
 		WHEN SUM(cc.classCredit) is null then 99
 		ELSE (99 - SUM(cc.classCredit))END
@@ -1255,7 +1255,7 @@ CREATE PROCEDURE creditsLeftFoundation
 	@foundationID	int
 AS
 	IF @foundationID = 5 
-		select [CreditHoursRemaining] = CASE
+		select  [classCredit] = CASE
 			WHEN SUM(f1.classCredit) >= 6 then 0
 			WHEN SUM(f1.classCredit) is null then 6
 			ELSE (6 - SUM(f1.classCredit))END
@@ -1263,7 +1263,7 @@ AS
 		join FoundationCourses as f1 on u.classID = f1.classID
 		where u.miamiId = @miamiID AND f1.foundationID = @foundationID
 	ELSE
-		select [CreditHoursRemaining] = CASE
+		select CASE
 			WHEN SUM(f1.classCredit) >= 3 then 0
 			WHEN SUM(f1.classCredit) is null then 3
 			ELSE (3 - SUM(f1.classCredit))END
