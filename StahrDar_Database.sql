@@ -68,6 +68,7 @@ GO
 
 /****** Object:  Table userAccount     ******/
 CREATE TABLE usersCourses (
+	userCourseId	INT NOT NULL PRIMARY KEY IDENTITY,
     miamiId         VARCHAR(50)             NOT NULL,
     classID         VARCHAR(50)             NOT NULL,
 	className		VARCHAR(100)	NOT NULL,
@@ -1138,16 +1139,14 @@ GO
 --Delete a course from the usersCourses table
 CREATE PROCEDURE DeleteCourseFromUsersList
 	@miamiID		VARCHAR(50),
-	@classID         VARCHAR(50),
-	@className		VARCHAR(100)
+	@userCourseId        VARCHAR(50)
 
 AS
 BEGIN
 	DELETE 
 	FROM usersCourses
-	WHERE @classID = classID AND
-		  @className = className AND
-		  @miamiID = miamiId
+	WHERE @miamiID = miamiId AND
+			@userCourseId = userCourseId
 END
 GO
 
@@ -1193,7 +1192,7 @@ GO
 CREATE PROCEDURE GetAllCoursesTakenByUser
 	@miamiId	VARCHAR(50)
 AS
-	SELECT uc.classID, uc.className, uc.classStatus
+	SELECT uc.userCourseId, uc.classID, uc.className, uc.classStatus
 	FROM usersCourses	uc
 	WHERE @miamiId = uc.miamiId
 GO
@@ -1310,12 +1309,25 @@ AS
 	where c1.classID is null
 GO
 
-CREATE PROCEDURE [dbo].[filterClasses]
-	@searchTerm VARCHAR(50)
+
+--filter se courses
+CREATE PROCEDURE filterSE
+AS
+	SELECT classID, className FROM dbo.seMajorClasses --124 rows
+GO
+
+--filter cs courses
+CREATE PROCEDURE filterCS
+AS
+	SELECT classID, className FROM dbo.csMajorClasses --124 rows
+GO
+
+--filter foundations
+CREATE PROCEDURE [dbo].[filterFoundations]
+	@foundationID VARCHAR(50)
 AS
 	WITH tbl AS (
-	SELECT classID, className FROM dbo.csMajorClasses --124 rows
-	UNION ALL 
+	
 	SELECT * FROM dbo.FoundationCourses where foundationID = 1 -- 2 rows
 	UNION ALL 
 	SELECT * FROM dbo.FoundationCourses where foundationID = 2 -- 35 rows
@@ -1331,7 +1343,5 @@ AS
 	SELECT * FROM dbo.FoundationCourses where foundationID = 7 --27 rows
 	UNION ALL
 	SELECT * FROM dbo.FoundationCourses where foundationID = 8 -- 17 rows
-	UNION ALL
-	SELECT classID, className FROM dbo.seMajorClasses -- 96 rows
-) SELECT DISTINCT * FROM tbl WHERE tbl.classID LIKE @searchTerm
-GO
+
+) SELECT DISTINCT * FROM tbl WHERE foundationID = @foundationID
