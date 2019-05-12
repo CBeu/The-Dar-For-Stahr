@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="UpdateClasses" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UpdateClasses.aspx.cs" Inherits="StahrDar.UpdateClasses" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <br />
+    <br />
     <h2>Add or Delete Classes You Have Taken</h2>
 
     <h3>Your Classes</h3>
@@ -72,11 +74,10 @@
             service("DeleteCourseFromUsersList", "{userCourseId: " + userCourseId + " }",
 
                 function (response) {
-                    
                     console.log(response);
                     getUserCourses();
                 }, function (response) {
-                    alert("FATAL ERROR");
+                    alert("Error deleting course.");
                     console.log(response);
             });
         }

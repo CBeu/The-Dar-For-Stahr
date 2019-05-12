@@ -13,351 +13,415 @@ using System.Xml;
 using System.Xml.Serialization;
 
 
-namespace _385WebExample {
-	/// <summary>
-	/// 
-	///		Author:			Mike Stahr
-	///		Created:		9-20-2017
-	///		Last Updated:	3-27-2019
-	///
-	///		Last Update:	Bug fix, added more flexibility in streaming data using send() method with style
-	/// </summary>
+namespace _385WebExample
+{
+    /// <summary>
+    /// 
+    ///		Author:			Mike Stahr
+    ///		Created:		9-20-2017
+    ///		Last Updated:	3-27-2019
+    ///
+    ///		Last Update:	Bug fix, added more flexibility in streaming data using send() method with style
+    /// </summary>
 
-	[WebService(Namespace = "http://tempuri.org/")]
-	[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-	[System.ComponentModel.ToolboxItem(false)]
-	[System.Web.Script.Services.ScriptService]
-	public class api : System.Web.Services.WebService {
-		// ========================================================================================
-		//					START - DO NOT CHANGE
-		// ========================================================================================
-		private const string dbConfig = "DefaultConnection";
-		#region ######################################################################################################################################################## Database Stuff
+    [WebService(Namespace = "http://tempuri.org/")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [System.ComponentModel.ToolboxItem(false)]
+    [System.Web.Script.Services.ScriptService]
+    public class api : System.Web.Services.WebService
+    {
+        // ========================================================================================
+        //					START - DO NOT CHANGE
+        // ========================================================================================
+        private const string dbConfig = "DefaultConnection";
+        #region ######################################################################################################################################################## Database Stuff
 
-		private string conn = System.Configuration.ConfigurationManager.ConnectionStrings[dbConfig].ConnectionString;
-		private List<SqlParameter> parameters = new List<SqlParameter>();
+        private string conn = System.Configuration.ConfigurationManager.ConnectionStrings[dbConfig].ConnectionString;
+        private List<SqlParameter> parameters = new List<SqlParameter>();
 
-		// This method is used in conjuction with a "user defined table" in the database
-		public DataTable sqlExec(string sql, DataTable dt, string udtblParam) {
-			DataTable ret = new DataTable();
+        // This method is used in conjuction with a "user defined table" in the database
+        public DataTable sqlExec(string sql, DataTable dt, string udtblParam)
+        {
+            DataTable ret = new DataTable();
 
-			try {
-				using (SqlConnection objConn = new SqlConnection(conn)) {
-					SqlCommand cmd = new SqlCommand(sql, objConn);
-					cmd.CommandType = CommandType.StoredProcedure;
-					SqlParameter tvparam = cmd.Parameters.AddWithValue(udtblParam, dt);
-					tvparam.SqlDbType = SqlDbType.Structured;
-					objConn.Open();
-					ret.Load(cmd.ExecuteReader(CommandBehavior.CloseConnection));
-				}
-			} catch (Exception e) {
-				setDataTableToError(ret, e);
-			}
-			parameters.Clear();
-			return ret;
-		}
+            try
+            {
+                using (SqlConnection objConn = new SqlConnection(conn))
+                {
+                    SqlCommand cmd = new SqlCommand(sql, objConn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlParameter tvparam = cmd.Parameters.AddWithValue(udtblParam, dt);
+                    tvparam.SqlDbType = SqlDbType.Structured;
+                    objConn.Open();
+                    ret.Load(cmd.ExecuteReader(CommandBehavior.CloseConnection));
+                }
+            }
+            catch (Exception e)
+            {
+                setDataTableToError(ret, e);
+            }
+            parameters.Clear();
+            return ret;
+        }
 
-		public DataTable sqlExec(string sql) {
-			return sqlExecDataTable(sql);
-		}
+        public DataTable sqlExec(string sql)
+        {
+            return sqlExecDataTable(sql);
+        }
 
-		public Object sqlExecFunction(string fn) {
-			DataSet userDataset = new DataSet();
-			Object ret = null;
-			try {
-				using (SqlConnection objConn = new SqlConnection(conn)) {
-					objConn.Open();
-					SqlCommand command = new SqlCommand(fn, objConn);
-					command.CommandType = CommandType.Text;
-					command.Parameters.AddRange(parameters.ToArray());
-					ret = command.ExecuteScalar();
-					objConn.Close();
-				}
-			} catch (Exception e) {
-				throw e;
-			}
+        public Object sqlExecFunction(string fn)
+        {
+            DataSet userDataset = new DataSet();
+            Object ret = null;
+            try
+            {
+                using (SqlConnection objConn = new SqlConnection(conn))
+                {
+                    objConn.Open();
+                    SqlCommand command = new SqlCommand(fn, objConn);
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddRange(parameters.ToArray());
+                    ret = command.ExecuteScalar();
+                    objConn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
 
-			parameters.Clear();
-			return ret;
-		}
+            parameters.Clear();
+            return ret;
+        }
 
-		public DataTable sqlExecDataTable(string sql) {
-			DataSet userDataset = new DataSet();
-			try {
-				using (SqlConnection objConn = new SqlConnection(conn)) {
-					SqlDataAdapter myCommand = new SqlDataAdapter(sql, objConn);
-					myCommand.SelectCommand.CommandType = CommandType.StoredProcedure;
-					myCommand.SelectCommand.Parameters.AddRange(parameters.ToArray());
-					myCommand.Fill(userDataset);
-				}
-			} catch (Exception e) {
-				//userDataset.Tables.Add();
-				//setDataTableToError(userDataset.Tables[0], e);
-				throw e;
-			}
+        public DataTable sqlExecDataTable(string sql)
+        {
+            DataSet userDataset = new DataSet();
+            try
+            {
+                using (SqlConnection objConn = new SqlConnection(conn))
+                {
+                    SqlDataAdapter myCommand = new SqlDataAdapter(sql, objConn);
+                    myCommand.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    myCommand.SelectCommand.Parameters.AddRange(parameters.ToArray());
+                    myCommand.Fill(userDataset);
+                }
+            }
+            catch (Exception e)
+            {
+                //userDataset.Tables.Add();
+                //setDataTableToError(userDataset.Tables[0], e);
+                throw e;
+            }
 
-			parameters.Clear();
-			if (userDataset.Tables.Count == 0) userDataset.Tables.Add();
-			return userDataset.Tables[0];
-		}
+            parameters.Clear();
+            if (userDataset.Tables.Count == 0) userDataset.Tables.Add();
+            return userDataset.Tables[0];
+        }
 
-		public DataSet sqlExecDataSet(string sql) {
+        public DataSet sqlExecDataSet(string sql)
+        {
 
-			DataSet userDataset = new DataSet();
-			try {
-				using (SqlConnection objConn = new SqlConnection(conn)) {
-					SqlDataAdapter myCommand = new SqlDataAdapter(sql, objConn);
-					myCommand.SelectCommand.CommandType = CommandType.StoredProcedure;
-					myCommand.SelectCommand.Parameters.AddRange(parameters.ToArray());
-					myCommand.Fill(userDataset);
-				}
-			} catch (Exception e) {
-				userDataset.Tables.Add();
-				setDataTableToError(userDataset.Tables[0], e);
-			}
+            DataSet userDataset = new DataSet();
+            try
+            {
+                using (SqlConnection objConn = new SqlConnection(conn))
+                {
+                    SqlDataAdapter myCommand = new SqlDataAdapter(sql, objConn);
+                    myCommand.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    myCommand.SelectCommand.Parameters.AddRange(parameters.ToArray());
+                    myCommand.Fill(userDataset);
+                }
+            }
+            catch (Exception e)
+            {
+                userDataset.Tables.Add();
+                setDataTableToError(userDataset.Tables[0], e);
+            }
 
-			parameters.Clear();
-			return userDataset;
-		}
+            parameters.Clear();
+            return userDataset;
+        }
 
-		private void setDataTableToError(DataTable tbl, Exception e) {
+        private void setDataTableToError(DataTable tbl, Exception e)
+        {
 
-			tbl.Columns.Add(new DataColumn("Error", typeof(Exception)));
+            tbl.Columns.Add(new DataColumn("Error", typeof(Exception)));
 
-			DataRow row = tbl.NewRow();
-			row["Error"] = e;
-			try {
-				tbl.Rows.Add(row);
-			} catch (Exception) { }
-		}
+            DataRow row = tbl.NewRow();
+            row["Error"] = e;
+            try
+            {
+                tbl.Rows.Add(row);
+            }
+            catch (Exception) { }
+        }
 
-		public void addParam(string name, object value) {
-			parameters.Add(new SqlParameter(name, value));
-		}
+        public void addParam(string name, object value)
+        {
+            parameters.Add(new SqlParameter(name, value));
+        }
 
-		#endregion
+        #endregion
 
-		#region ######################################################################################################################################################## Serializer
+        #region ######################################################################################################################################################## Serializer
 
-		private void send(object obj, serializeStyle style) {
-			try {
-				switch (style) {
-					case serializeStyle.DATA_SET: serializeDataSet(sqlExecDataSet((string)obj)); break;
-					case serializeStyle.DATA_TABLE: serializeDataTable(sqlExecDataTable((string)obj)); break;
-					case serializeStyle.OBJECT: serializeObject(obj); break;
-					case serializeStyle.SINGLE_TABLE_ROW: serializeSingleDataTableRow(sqlExecDataTable((string)obj)); break;
-					case serializeStyle.DICTIONARY: serializeDictionary((Dictionary<object, object>)obj); break;
-					case serializeStyle.GENERAL: serialize(obj); break;
-					default: serialize("Invalid serialization"); break;
-				}
-			} catch (Exception e) {
-				serialize("Error during send(): " + e.Message);
-			}
-		}
-
-
-		private List<Dictionary<string, object>> getTableRows(DataTable dt) {
-			List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
-			Dictionary<string, object> row;
-			row = new Dictionary<string, object>();
-			foreach (DataRow dr in dt.Rows) {
-				row = new Dictionary<string, object>();
-				foreach (DataColumn col in dt.Columns)
-					row.Add(col.ColumnName, dr[col]);
-				rows.Add(row);
-			}
-			return rows;
-		}
-
-		// Streams out a JSON string
-		public void streamJson(string jsonString) {
-			try {
-
-				jsonString = jsonString.Trim();
-				HttpContext.Current.Response.Clear();
-				HttpContext.Current.Response.ContentType = "application/json";
-				HttpContext.Current.Response.StatusCode = 200;
-				HttpContext.Current.Response.StatusDescription = "";
-				HttpContext.Current.Response.AddHeader("content-length", jsonString.Length.ToString());     // Need this line to remove the d:"null" in the stream out
-				HttpContext.Current.Response.Write(jsonString);                                             // BUT... with it there are times when the json string doesn't complete... UGH!!!!!!
-				HttpContext.Current.Response.Flush();
-				HttpContext.Current.ApplicationInstance.CompleteRequest();
-			} catch { }
-		}
-
-		// NEW - Converts a returned JSON dataset to a json object
-		public void streamJson(DataSet ds) {
-			string ret = "";
-			try {
-				foreach (DataTable dt in ds.Tables)
-					foreach (DataRow dr in dt.Rows)
-						ret += dr.ItemArray[0];
-			} catch (Exception e) {
-				ret = "";
-			}
-
-			streamJson(ret);
-		}
-
-		// Simple method to serialize an object into a JSON string and write it to the Response Stream
-		public void serialize(Object obj) {
-			try {
-				streamJson(new JavaScriptSerializer().Serialize(obj));
-			} catch (Exception e) {
-				streamJson(new JavaScriptSerializer().Serialize("Invalid serializable object. r2w Error 2212: " + e.Source));
-			}
-		}
-
-		// Generate and serialize a single row from a returned data table. Method will only return the first row - even if there are more.
-		public void serializeSingleDataTableRow(DataTable dt) {
-			serializeSingleDataTableRow(dt, "");
-		}
-
-		public void serializeSingleDataTableRow(DataTable dt, params string[] excludeColumns) {
-			Dictionary<string, object> row = new Dictionary<string, object>();
-
-			if (dt.Rows.Count > 0)
-				foreach (DataColumn col in dt.Columns)
-					if (!excludeColumns.Contains(col.ColumnName))
-						row.Add(col.ColumnName, dt.Rows[0][col]);
-			serialize(row);
-		}
-
-		// Serialize an entire table retreived from a data call
-		public void serializeDataTable(DataTable dt) {
-			serialize(getTableRows(dt));
-		}
-
-		// Serialize an multiple tables retreived from a data call
-		public void serializeDataSet(DataSet ds) {
-			List<object> ret = new List<object>();
-
-			foreach (DataTable dt in ds.Tables)
-				ret.Add(getTableRows(dt));
-			serialize(ret);
-		}
-
-		// Converting an object to XML status
-		public void serializeXML<T>(T value) {
-			string ret = "";
-
-			if (value != null) {
-				try {
-					HttpContext.Current.Response.Clear();
-					HttpContext.Current.Response.ContentType = "text/xml";
-
-					var xmlserializer = new XmlSerializer(typeof(T));
-					var stringWriter = new StringWriter();
-
-					using (var writer = XmlWriter.Create(stringWriter)) {
-						xmlserializer.Serialize(writer, value);
-						ret = stringWriter.ToString();
-					}
-				} catch (Exception) { }
-				HttpContext.Current.Response.Write(ret);
-				HttpContext.Current.Response.Flush();
-				HttpContext.Current.ApplicationInstance.CompleteRequest();
-			}
-		}
-
-		// Serialize a dictionary object to avoid having to create more classes
-		public void serializeDictionary(Dictionary<object, object> dic) {
-			serialize(dic.ToDictionary(item => item.Key.ToString(), item => item.Value.ToString()));
-		}
-
-		// Using generics this method will serialize a JSON package into a class structure or return a new instance of the class on error
-		//public T _download_serialized_json_data<T>(string url) where T : new() {
-		//    using (var w = new WebClient()) {
-		//        try { return JsonConvert.DeserializeObject<T>(w.DownloadString(url)); } catch (Exception) { return new T(); }
-		//    }
-		//}
-
-		// Probably don't need this as one can just type "serialize(object to serialize);" but if every we do we have it.   
-		// Not sure it will work for objects that have arrays of other objects though...
-		public void serializeObject(Object obj) {
-			Dictionary<string, object> row = new Dictionary<string, object>();
-			row = new Dictionary<string, object>();
-			var prop = obj.GetType().GetProperties();
-
-			foreach (var props in prop)
-				row.Add(props.Name, props.GetGetMethod().Invoke(obj, null));
-			serialize(row);
-		}
+        private void send(object obj, serializeStyle style)
+        {
+            try
+            {
+                switch (style)
+                {
+                    case serializeStyle.DATA_SET: serializeDataSet(sqlExecDataSet((string)obj)); break;
+                    case serializeStyle.DATA_TABLE: serializeDataTable(sqlExecDataTable((string)obj)); break;
+                    case serializeStyle.OBJECT: serializeObject(obj); break;
+                    case serializeStyle.SINGLE_TABLE_ROW: serializeSingleDataTableRow(sqlExecDataTable((string)obj)); break;
+                    case serializeStyle.DICTIONARY: serializeDictionary((Dictionary<object, object>)obj); break;
+                    case serializeStyle.GENERAL: serialize(obj); break;
+                    default: serialize("Invalid serialization"); break;
+                }
+            }
+            catch (Exception e)
+            {
+                serialize("Error during send(): " + e.Message);
+            }
+        }
 
 
-		#endregion
+        private List<Dictionary<string, object>> getTableRows(DataTable dt)
+        {
+            List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+            Dictionary<string, object> row;
+            row = new Dictionary<string, object>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                    row.Add(col.ColumnName, dr[col]);
+                rows.Add(row);
+            }
+            return rows;
+        }
 
-		#region ######################################################################################################################################################## Internal Methods
+        // Streams out a JSON string
+        public void streamJson(string jsonString)
+        {
+            try
+            {
 
-		private void sendEmail(string from, string to, string cc, string bcc, string subject, string message) {
-			SmtpClient mailClient = null;
-			try {
-				string pw = "your password goes here";
-				mailClient = new SmtpClient("smtp.gmail.com", 587);  //'465
-				NetworkCredential cred = new NetworkCredential("youremail@gmail.com", pw);  // You can also use your @miamioh.edu account
-				MailMessage msg = new MailMessage();
-				msg.IsBodyHtml = true;
-				msg.From = new MailAddress(from);
-				msg.To.Add(to);
-				msg.Subject = subject;
-				msg.Body = "<html><head><title></title></head><body>" + HttpUtility.HtmlDecode(message) + "</body></html>";
-				msg.ReplyToList.Add(from);
-				if (cc.Trim().Length > 0) msg.CC.Add(cc);
-				if (bcc.Trim().Length > 0) msg.Bcc.Add(bcc);
-				mailClient.EnableSsl = true;
-				mailClient.Credentials = cred;
-				mailClient.Send(msg);
-			} catch (Exception e) { streamJson(e.Message); } finally {
-				try { mailClient.Dispose(); mailClient = null; } catch { }
-			}
-		}
+                jsonString = jsonString.Trim();
+                HttpContext.Current.Response.Clear();
+                HttpContext.Current.Response.ContentType = "application/json";
+                HttpContext.Current.Response.StatusCode = 200;
+                HttpContext.Current.Response.StatusDescription = "";
+                HttpContext.Current.Response.AddHeader("content-length", jsonString.Length.ToString());     // Need this line to remove the d:"null" in the stream out
+                HttpContext.Current.Response.Write(jsonString);                                             // BUT... with it there are times when the json string doesn't complete... UGH!!!!!!
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+            }
+            catch { }
+        }
 
-		#endregion
+        // NEW - Converts a returned JSON dataset to a json object
+        public void streamJson(DataSet ds)
+        {
+            string ret = "";
+            try
+            {
+                foreach (DataTable dt in ds.Tables)
+                    foreach (DataRow dr in dt.Rows)
+                        ret += dr.ItemArray[0];
+            }
+            catch (Exception e)
+            {
+                ret = "";
+            }
 
-		#region ######################################################################################################################################################## Internal Classes
+            streamJson(ret);
+        }
 
-		private enum serializeStyle {
-			GENERAL,
-			DATA_SET,
-			DATA_TABLE,
-			DICTIONARY,
-			OBJECT,
-			SINGLE_TABLE_ROW
-		}
+        // Simple method to serialize an object into a JSON string and write it to the Response Stream
+        public void serialize(Object obj)
+        {
+            try
+            {
+                streamJson(new JavaScriptSerializer().Serialize(obj));
+            }
+            catch (Exception e)
+            {
+                streamJson(new JavaScriptSerializer().Serialize("Invalid serializable object. r2w Error 2212: " + e.Source));
+            }
+        }
 
-		public class PermissionError {
+        // Generate and serialize a single row from a returned data table. Method will only return the first row - even if there are more.
+        public void serializeSingleDataTableRow(DataTable dt)
+        {
+            serializeSingleDataTableRow(dt, "");
+        }
 
-			public int errorCode;
-			public string message;
+        public void serializeSingleDataTableRow(DataTable dt, params string[] excludeColumns)
+        {
+            Dictionary<string, object> row = new Dictionary<string, object>();
 
-			public PermissionError() : this("You do not have permission to use this service", 0) { }
+            if (dt.Rows.Count > 0)
+                foreach (DataColumn col in dt.Columns)
+                    if (!excludeColumns.Contains(col.ColumnName))
+                        row.Add(col.ColumnName, dt.Rows[0][col]);
+            serialize(row);
+        }
 
-			public PermissionError(string message, int errorCode) {
-				this.message = message;
-				this.errorCode = errorCode;
-			}
+        // Serialize an entire table retreived from a data call
+        public void serializeDataTable(DataTable dt)
+        {
+            serialize(getTableRows(dt));
+        }
 
-			public PermissionError(string message) : this(message, 0) { }
+        // Serialize an multiple tables retreived from a data call
+        public void serializeDataSet(DataSet ds)
+        {
+            List<object> ret = new List<object>();
 
-			public PermissionError(int errorCode) : this("You do not have permission to use this service", errorCode) { }
+            foreach (DataTable dt in ds.Tables)
+                ret.Add(getTableRows(dt));
+            serialize(ret);
+        }
 
-		}
+        // Converting an object to XML status
+        public void serializeXML<T>(T value)
+        {
+            string ret = "";
 
-		#endregion
-		// ========================================================================================
-		//					END - DO NOT CHANGE
-		// ========================================================================================
+            if (value != null)
+            {
+                try
+                {
+                    HttpContext.Current.Response.Clear();
+                    HttpContext.Current.Response.ContentType = "text/xml";
+
+                    var xmlserializer = new XmlSerializer(typeof(T));
+                    var stringWriter = new StringWriter();
+
+                    using (var writer = XmlWriter.Create(stringWriter))
+                    {
+                        xmlserializer.Serialize(writer, value);
+                        ret = stringWriter.ToString();
+                    }
+                }
+                catch (Exception) { }
+                HttpContext.Current.Response.Write(ret);
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+            }
+        }
+
+        // Serialize a dictionary object to avoid having to create more classes
+        public void serializeDictionary(Dictionary<object, object> dic)
+        {
+            serialize(dic.ToDictionary(item => item.Key.ToString(), item => item.Value.ToString()));
+        }
+
+        // Using generics this method will serialize a JSON package into a class structure or return a new instance of the class on error
+        //public T _download_serialized_json_data<T>(string url) where T : new() {
+        //    using (var w = new WebClient()) {
+        //        try { return JsonConvert.DeserializeObject<T>(w.DownloadString(url)); } catch (Exception) { return new T(); }
+        //    }
+        //}
+
+        // Probably don't need this as one can just type "serialize(object to serialize);" but if every we do we have it.   
+        // Not sure it will work for objects that have arrays of other objects though...
+        public void serializeObject(Object obj)
+        {
+            Dictionary<string, object> row = new Dictionary<string, object>();
+            row = new Dictionary<string, object>();
+            var prop = obj.GetType().GetProperties();
+
+            foreach (var props in prop)
+                row.Add(props.Name, props.GetGetMethod().Invoke(obj, null));
+            serialize(row);
+        }
 
 
-		/* Example of a connection string that points to the AP database on the localdb SQL Server
+        #endregion
+
+        #region ######################################################################################################################################################## Internal Methods
+
+        private void sendEmail(string from, string to, string cc, string bcc, string subject, string message)
+        {
+            SmtpClient mailClient = null;
+            try
+            {
+                string pw = "your password goes here";
+                mailClient = new SmtpClient("smtp.gmail.com", 587);  //'465
+                NetworkCredential cred = new NetworkCredential("youremail@gmail.com", pw);  // You can also use your @miamioh.edu account
+                MailMessage msg = new MailMessage();
+                msg.IsBodyHtml = true;
+                msg.From = new MailAddress(from);
+                msg.To.Add(to);
+                msg.Subject = subject;
+                msg.Body = "<html><head><title></title></head><body>" + HttpUtility.HtmlDecode(message) + "</body></html>";
+                msg.ReplyToList.Add(from);
+                if (cc.Trim().Length > 0) msg.CC.Add(cc);
+                if (bcc.Trim().Length > 0) msg.Bcc.Add(bcc);
+                mailClient.EnableSsl = true;
+                mailClient.Credentials = cred;
+                mailClient.Send(msg);
+            }
+            catch (Exception e) { streamJson(e.Message); }
+            finally
+            {
+                try { mailClient.Dispose(); mailClient = null; } catch { }
+            }
+        }
+
+        #endregion
+
+        #region ######################################################################################################################################################## Internal Classes
+
+        private enum serializeStyle
+        {
+            GENERAL,
+            DATA_SET,
+            DATA_TABLE,
+            DICTIONARY,
+            OBJECT,
+            SINGLE_TABLE_ROW
+        }
+
+        public class PermissionError
+        {
+
+            public int errorCode;
+            public string message;
+
+            public PermissionError() : this("You do not have permission to use this service", 0) { }
+
+            public PermissionError(string message, int errorCode)
+            {
+                this.message = message;
+                this.errorCode = errorCode;
+            }
+
+            public PermissionError(string message) : this(message, 0) { }
+
+            public PermissionError(int errorCode) : this("You do not have permission to use this service", errorCode) { }
+
+        }
+
+        #endregion
+        // ========================================================================================
+        //					END - DO NOT CHANGE
+        // ========================================================================================
+
+
+        /* Example of a connection string that points to the AP database on the localdb SQL Server
 		  <connectionStrings>
 			<add name="DefaultConnection" connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AP;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True" providerName="System.Data.SqlClient" />
 		  </connectionStrings>
 
 		*/
 
-		// Methods
-		#region ######################################################################################################################################################## Methods
+        // Methods
+        #region ######################################################################################################################################################## Methods
 
         [WebMethod]
         public void getAllCoursesTakenByUser()
@@ -368,7 +432,8 @@ namespace _385WebExample {
         }
 
         [WebMethod]
-        public void AddNewCourse(string classID, string className, string classStatus) {
+        public void AddNewCourse(string classID, string className, string classStatus)
+        {
             string uid = User.Identity.Name;
             addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
             addParam("@classID", classID);
@@ -378,222 +443,94 @@ namespace _385WebExample {
             send("AddNewCourse", serializeStyle.DATA_TABLE);
         }
 
-        [WebMethod]
-        public void PotentialF1Classes()
-        {
-            send("PotentialF1Classes", serializeStyle.DATA_TABLE);
-        }
 
-        [WebMethod]
-        public void PotentialF2AClasses()
-        {
-            send("PotentialF2AClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void PotentialF2BClasses()
-        {
-            send("PotentialF2BClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void PotentialF2CClasses()
-        {
-            send("PotentialF2CClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void PotentialF3BClasses()
-        {
-            send("PotentialF3BClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void PotentialF4AClasses()
-        {
-            send("PotentialF4AClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void PotentialF4BClasses()
-        {
-            send("PotentialF4BClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void PotentialF5Classes()
-        {
-            send("PotentialF5Classes", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void PotentialCSClasses()
-        {
-            send("PotentialCSClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void PotentialSEClasses()
-        {
-            send("PotentialSEClasses", serializeStyle.DATA_TABLE);
-        }
 
         [WebMethod]
         public void DeleteCourseFromUsersList(string userCourseId)
         {
             string uid = User.Identity.Name;
-            addParam("@miamiId", uid.Substring(0,uid.IndexOf("@")));
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
             addParam("@userCourseId", userCourseId);
-      
+
             send("DeleteCourseFromUsersList", serializeStyle.DATA_TABLE);
         }
 
         [WebMethod]
-        public void filterCourses(string classID)
+        public void FilterFoundations(string foundationID)
         {
-            addParam("@searchTerm", classID);
-            send("filterClasses", serializeStyle.DATA_TABLE);
+            addParam("@foundationID", foundationID);
+            send("filterFoundations", serializeStyle.DATA_TABLE);
         }
 
         [WebMethod]
-        public void creditsLeftF1(string miamiID)
+        public void FilterCS()
         {
-            addParam("@miamiID", miamiID);
-            send("creditsLeftF1", serializeStyle.DATA_TABLE);
+            send("filterCS", serializeStyle.DATA_TABLE);
         }
 
         [WebMethod]
-        public void remainingF1Classes(string miamiID)
+        public void FilterSE()
         {
-            addParam("@miamiID", miamiID);
-            send("remainingF1Classes", serializeStyle.DATA_TABLE);
+            send("filterSE", serializeStyle.DATA_TABLE);
+        }
+
+
+
+        [WebMethod]
+        public void CreditsLeftFoundations(string foundationID)
+        {
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@foundationID", foundationID);
+
+            send("creditsLeftFoundations", serializeStyle.DATA_TABLE);
         }
 
         [WebMethod]
-        public void creditsLeftF2A(string miamiID)
+        public void CreditsLeftCS()
         {
-            addParam("@miamiID", miamiID);
-            send("creditsLeftF2A", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void remainingF2AClasses(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("remainingF2AClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void creditsLeftF2B(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("creditsLeftF2B", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void remainingF2BClasses(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("remainingF2BClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void creditsLeftF2C(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("creditsLeftF2C", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void remainingF2CClasses(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("remainingF2CClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void creditsLeftF3B(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("creditsLeftF3B", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void remainingF3BClasses(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("remainingF3BClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void creditsLeftF4A(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("creditsLeftF4A", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void remainingF4AClasses(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("remainingF4AClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void creditsLeftF4B(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("creditsLeftF4B", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void remainingF4BClasses(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("remainingF4BClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void creditsLeftF5(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("creditsLeftF5", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void remainingF5Classes(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
-            send("remainingF5Classes", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void creditsLeftCS(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
             send("creditsLeftCS", serializeStyle.DATA_TABLE);
         }
 
         [WebMethod]
-        public void remainingCSClasses(string miamiID)
+        public void CreditsLeftSE()
         {
-            addParam("@miamiID", miamiID);
-            send("remainingCSClasses", serializeStyle.DATA_TABLE);
-        }
-
-        [WebMethod]
-        public void creditsLeftSE(string miamiID)
-        {
-            addParam("@miamiID", miamiID);
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
             send("creditsLeftSE", serializeStyle.DATA_TABLE);
         }
 
         [WebMethod]
-        public void remainingSEClasses(string miamiID)
+        public void RemainingFoundationClasses(string foundationID)
         {
-            addParam("@miamiID", miamiID);
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@foundationID", foundationID);
+
+            send("remainingFoundationClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void RemainingCSClasses()
+        {
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+
+            send("remainingCSClasses", serializeStyle.DATA_TABLE);
+        }
+
+        [WebMethod]
+        public void RemainingSEClasses()
+        {
+            string uid = User.Identity.Name;
+            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+
             send("remainingSEClasses", serializeStyle.DATA_TABLE);
         }
+
+
         #endregion
     }
 }
