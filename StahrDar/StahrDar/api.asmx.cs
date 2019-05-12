@@ -480,7 +480,7 @@ namespace _385WebExample
         public void CreditsLeftFoundations(string foundationID)
         {
             string uid = User.Identity.Name;
-            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@miamiID", uid.Substring(0, uid.IndexOf("@")));
             addParam("@foundationID", foundationID);
 
             send("creditsLeftFoundations", serializeStyle.DATA_TABLE);
@@ -490,7 +490,7 @@ namespace _385WebExample
         public void CreditsLeftCS()
         {
             string uid = User.Identity.Name;
-            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@miamiID", uid.Substring(0, uid.IndexOf("@")));
             send("creditsLeftCS", serializeStyle.DATA_TABLE);
         }
 
@@ -498,7 +498,7 @@ namespace _385WebExample
         public void CreditsLeftSE()
         {
             string uid = User.Identity.Name;
-            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@miamiID", uid.Substring(0, uid.IndexOf("@")));
             send("creditsLeftSE", serializeStyle.DATA_TABLE);
         }
 
@@ -506,7 +506,7 @@ namespace _385WebExample
         public void RemainingFoundationClasses(string foundationID)
         {
             string uid = User.Identity.Name;
-            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@miamiID", uid.Substring(0, uid.IndexOf("@")-1));
             addParam("@foundationID", foundationID);
 
             send("remainingFoundationClasses", serializeStyle.DATA_TABLE);
@@ -516,7 +516,7 @@ namespace _385WebExample
         public void RemainingCSClasses()
         {
             string uid = User.Identity.Name;
-            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@miamiID", uid.Substring(0, uid.IndexOf("@")));
 
             send("remainingCSClasses", serializeStyle.DATA_TABLE);
         }
@@ -525,7 +525,7 @@ namespace _385WebExample
         public void RemainingSEClasses()
         {
             string uid = User.Identity.Name;
-            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@miamiID", uid.Substring(0, uid.IndexOf("@")));
 
             send("remainingSEClasses", serializeStyle.DATA_TABLE);
         }
