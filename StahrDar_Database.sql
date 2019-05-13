@@ -11,7 +11,7 @@
 USE master
 GO
 
-DROP DATABASE StahrDar
+DROP DATABASE IF EXISTS StahrDar
 GO
 
 /****** Object:  Database StahrDar    ******/
