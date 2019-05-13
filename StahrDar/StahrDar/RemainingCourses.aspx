@@ -109,7 +109,7 @@
             service(method2, data,
                 function (response) {
                     for (var i = 0; i < response.length; i++) {
-                        c = "Select <b>" + response[i].classCredit + "</b> classes from this section.";
+                        c = "Select <b>" + response[i].classCredit / 3 + "</b> classes from this section.";
                     }
                 $("#lstCreditsLeft").html(c);
             }, function (response) {
