@@ -1,0 +1,4 @@
+INSTRUCTIONS:
+1. Run the file titled StahrDar_Databse.sql
+2. Open the folder StahrDar
+3. Run the file title StahrDar.sln
