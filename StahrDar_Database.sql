@@ -1263,7 +1263,7 @@ AS
 		join FoundationCourses as f1 on u.classID = f1.classID
 		where u.miamiId = @miamiID AND f1.foundationID = @foundationID
 	ELSE
-		select CASE
+		select [classCredit] = CASE
 			WHEN SUM(f1.classCredit) >= 3 then 0
 			WHEN SUM(f1.classCredit) is null then 3
 			ELSE (3 - SUM(f1.classCredit))END
@@ -1327,21 +1327,19 @@ CREATE PROCEDURE [dbo].[filterFoundations]
 	@foundationID VARCHAR(50)
 AS
 	WITH tbl AS (
-	
-	SELECT * FROM dbo.FoundationCourses where foundationID = 1 -- 2 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 1
 	UNION ALL 
-	SELECT * FROM dbo.FoundationCourses where foundationID = 2 -- 35 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 2
 	UNION ALL
-	SELECT * FROM dbo.FoundationCourses where foundationID = 3 -- 105 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 3
 	UNION ALL
-	SELECT * FROM dbo.FoundationCourses where foundationID = 4 -- 66 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 4
 	UNION ALL
-	SELECT * FROM dbo.FoundationCourses where foundationID = 5 -- 79 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 5
 	UNION ALL
-	SELECT * FROM dbo.FoundationCourses where foundationID = 6 -- 18 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 6
 	UNION ALL
-	SELECT * FROM dbo.FoundationCourses where foundationID = 7 --27 rows
+	SELECT * FROM dbo.FoundationCourses where foundationID = 7
 	UNION ALL
-	SELECT * FROM dbo.FoundationCourses where foundationID = 8 -- 17 rows
-
+	SELECT * FROM dbo.FoundationCourses where foundationID = 8
 ) SELECT DISTINCT * FROM tbl WHERE foundationID = @foundationID

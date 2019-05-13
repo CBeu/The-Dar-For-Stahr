@@ -443,8 +443,6 @@ namespace _385WebExample
             send("AddNewCourse", serializeStyle.DATA_TABLE);
         }
 
-
-
         [WebMethod]
         public void DeleteCourseFromUsersList(string userCourseId)
         {
@@ -480,10 +478,10 @@ namespace _385WebExample
         public void CreditsLeftFoundations(string foundationID)
         {
             string uid = User.Identity.Name;
-            addParam("@miamiId", uid.Substring(0, uid.IndexOf("@")));
+            addParam("@miamiID", uid.Substring(0, uid.IndexOf("@")));
             addParam("@foundationID", foundationID);
 
-            send("creditsLeftFoundations", serializeStyle.DATA_TABLE);
+            send("creditsLeftFoundation", serializeStyle.DATA_TABLE);
         }
 
         [WebMethod]

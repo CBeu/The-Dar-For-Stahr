@@ -31,7 +31,7 @@
 
              var method = "";
              var method2 = "";
-            var data = "";
+             var data = "";
 
             switch ($("#filterType").val()) {
                 case "f1":
